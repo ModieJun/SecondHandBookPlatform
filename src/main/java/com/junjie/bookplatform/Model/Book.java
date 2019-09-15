@@ -16,15 +16,20 @@ public class Book {
 
     private String author;
 
-    @ManyToOne()
+    @ManyToOne(targetEntity = User.class)
     @NonNull
     @JoinTable(name = "book_User_Owner",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private User bookOwner;
 
-    @ManyToOne()
+    @ManyToOne( targetEntity = User.class)
+    @JoinTable(
+            name = "book_user_bought",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private User boughtBuy;
 
     @NonNull
@@ -38,7 +43,7 @@ public class Book {
         return id;
     }
 
-    public Book(String name, String author ,User bookOwner, Double price) {
+    public Book(String name, String author , Double price,User bookOwner) {
         this.bookOwner=bookOwner;
         this.bookName = name;
         this.author = author;
@@ -63,6 +68,10 @@ public class Book {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getPrice() {
+        return this.price;
     }
 
     public void setBookOwner(User bookOwner) {

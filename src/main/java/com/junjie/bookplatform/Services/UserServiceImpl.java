@@ -14,13 +14,17 @@ public class UserServiceImpl  implements UserService{
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.encoder = encoder;
-        User u = new User();
-        u.setUsername("jj");
-        u.setPassword(encoder.encode("123"));
-        this.userRepository.save(u);
     }
 
-
+    /**
+     *
+     * @param user
+     *      Username [@NotNUll]
+     *      Password should be In Plain text
+     * @return
+     *      {True, False}
+     * if the User has been saved Succesfully
+     */
     @Override
     public boolean addUser(User user) {
         User u= this.getUser(user.getUsername());

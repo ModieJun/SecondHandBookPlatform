@@ -26,29 +26,21 @@ public class User {
     @Column(unique = true)
     private String wechat_id;
 
-    @OneToMany(mappedBy = "book_id")
-    private Set<Book> listedBooks;
-
-    @OneToMany(mappedBy = "book_id")
-    private Set<Book> boughtBooks;
+//    @OneToMany(mappedBy = "id")
+//    private Set<Book> listedBooks;
+//
+//    @OneToMany(mappedBy = "id")
+//    private Set<Book> boughtBooks;
 
     public User() {
     }
 
-    public User(@NotNull String username, @NotNull String password, String wechat_id, Set<Book> listedBooks, Set<Book> boughtBooks) {
-        this.username = username;
-        this.password = password;
-        this.wechat_id = wechat_id;
-        this.listedBooks = listedBooks;
-        this.boughtBooks = boughtBooks;
-    }
-
-
-    public User(String username, String password, String wechat_id) {
+    public User(@NotNull String username, @NotNull String password, String wechat_id) {
         this.username = username;
         this.password = password;
         this.wechat_id = wechat_id;
     }
+
 
     public Long getUser_Id() {
         return user_Id;
@@ -78,19 +70,19 @@ public class User {
         this.wechat_id = wechat_id;
     }
 
-    public Set<Book> getListedBooks() {
-        return listedBooks;
-    }
-
-    public void setListedBooks(Set<Book> listedBooks) {
-        this.listedBooks = listedBooks;
-    }
-
-    public Set<Book> getBoughtBooks() {
-        return boughtBooks;
-    }
-
-    public void setBoughtBooks(Set<Book> boughtBooks) {
-        this.boughtBooks = boughtBooks;
-    }
+//    public Set<Book> getListedBooks() {
+//        return listedBooks;
+//    }
+//
+//    public void setListedBooks(Set<Book> listedBooks) {
+//        this.listedBooks = listedBooks;
+//    }
+//
+//    public Set<Book> getBoughtBooks() {
+//        return boughtBooks;
+//    }
+//
+//    public void setBoughtBooks(Set<Book> boughtBooks) {
+//        this.boughtBooks = boughtBooks;
+//    }
 }

@@ -11,7 +11,7 @@
 	<groupId>com.junjie</groupId>
 	<artifactId>bookplatform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bookplatform</name>
+	<bookName>bookplatform</bookName>
 	<description>Second hand Book Platform for Jinan</description>
 
 	<properties>
