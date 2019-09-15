@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+
+</head>
+<body>
+
+<div>
+    <div class="container text-center">
+        <h2>Filter</h2>
+        <form action=""  method="get"  class="form-group w-75">
+            <label for="bookName">Book Name</label><input class="form-control" type="text" name="bookName" id="bookName" placeholder="Book Name">
+            <label for="bookAuthor"> Book Author</label><input type="text"  class="form-control" name="bookAuthor" id="bookAuthor" placeholder="Book Author">
+            <button type="button" value="submit" class=" mt-1 btn  btn-primary btn-block">Filter</button>
+        </form>
+    </div>
+
+    <div id="resultTbl" class="mt-5 container">
+        <table class="table table-bordered ">
+            <tr class="bg-light">
+                <th class="column-header">Book Name</th>
+                <th class="column-header">Book Author</th>
+                <th class="column-header">Major</th>
+                <th class="column-header">Year Needed</th>
+                <th class="column-header">Price</th>
+                <th class="column-header">Image</th>
+            </tr>
+            <tr th:each="book:${books}" >
+                <td th:text="${book.getBookName()}"></td>
+                <td th:text="${book.getAuthor()}"></td>
+                <td >null</td>
+                <td >null</td>
+                <td th:text="|¥     ${book.getPrice()}|"></td>
+                <td>null</td>
+            </tr>
+        </table>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>

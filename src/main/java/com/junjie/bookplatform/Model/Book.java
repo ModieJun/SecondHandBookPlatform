@@ -33,6 +33,7 @@ public class Book {
     private User boughtBuy;
 
     @NonNull
+    @Column(length = 10,precision = 2)
     private Double price;
 
     public Book() {
