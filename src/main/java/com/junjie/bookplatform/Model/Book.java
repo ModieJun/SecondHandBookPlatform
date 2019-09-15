@@ -10,7 +10,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long book_Id;
+    private Long id;
 
     private String bookName;
 
@@ -18,19 +18,31 @@ public class Book {
 
     @ManyToOne()
     @NonNull
+    @JoinTable(name = "book_User_Owner",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private User bookOwner;
 
     @ManyToOne()
     private User boughtBuy;
 
-    public Long getBook_Id() {
-        return book_Id;
+    @NonNull
+    private Double price;
+
+    public Book() {
+
     }
 
-    public Book(String name, String author ,User bookOwner) {
+    public Long getId() {
+        return id;
+    }
+
+    public Book(String name, String author ,User bookOwner, Double price) {
         this.bookOwner=bookOwner;
         this.bookName = name;
         this.author = author;
+        this.price=price;
     }
 
     public String getBookName() {
@@ -47,5 +59,25 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setBookOwner(User bookOwner) {
+        this.bookOwner = bookOwner;
+    }
+
+    public void setBoughtBuy(User boughtBuy) {
+        this.boughtBuy = boughtBuy;
+    }
+
+    public User getBookOwner() {
+        return bookOwner;
+    }
+
+    public User getBoughtBuy() {
+        return boughtBuy;
     }
 }
