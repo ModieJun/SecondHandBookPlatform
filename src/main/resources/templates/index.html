@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Second Hand Book Platform</title>
-    <link rel="stylesheet"  th:href="@{/public/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
 </head>
 <body>
+<div class="container center">
 
-<h1 class="h1">Second Hand Book Platform</h1>
+<div>
+    <h1 class="h1">Second Hand Book Platform</h1>
+
+</div>
+    <div>
+
+        <form action="/logout" method="get">
+            <button type="submit" class=" btn btn-lg btn-block btn-primary">Logout</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

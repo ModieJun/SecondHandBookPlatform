@@ -31,7 +31,7 @@ public class SecurityServiceImpl implements SecurityService {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
             token.setDetails(new WebAuthenticationDetails(request));
             SecurityContextHolder.getContext().setAuthentication(token);
-
+            logger.warn("Token: " + token.isAuthenticated());
             request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,SecurityContextHolder.getContext());
         } catch (UsernameNotFoundException e) {
             e.getStackTrace();

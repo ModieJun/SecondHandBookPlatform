@@ -29,7 +29,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = {"/"})
     public String Home() {
         return "index";
     }
@@ -62,5 +62,10 @@ public class HomeController {
             return "redirect:/";
         }
         return "/register";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        return "redirect:/";
     }
 }

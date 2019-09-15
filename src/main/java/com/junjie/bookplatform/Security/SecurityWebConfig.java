@@ -49,13 +49,13 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/resources/**","/css/**","/h2-console/**","/console/**")
+        http.authorizeRequests().antMatchers("/resources/**","/h2-console/**","/console/**")
                 .permitAll()
                     .and().authorizeRequests().antMatchers("/").authenticated()
                     .and()
                 .formLogin().loginPage("/login").permitAll()
                     .and()
-                .logout().permitAll();
+                .logout().logoutUrl("/logout").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

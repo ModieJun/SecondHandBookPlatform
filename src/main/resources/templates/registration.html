@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
+
 </head>
 <body>
 <div>
-    <h2>Register</h2>
-    <form action="/register" method="post" >
-        <label for="username">Username</label><input th:field="${newUser.username}" type="text" name="username" id="username">
-        <label for="password">Password</label><input th:field="${newUser.password}"  type="password" name="passwod" id="password">
-        <input type="submit" value="Register">
-    </form>
+    <h2 class="h2">Register</h2>
+    <div class="container">
+
+        <form action="/register" method="post" class="form-group">
+            <label for="username" >Username
+                <input th:field="${newUser.username}" type="text" name="username"class="form-control"
+                           id="username">
+            </label>
+            <label for="password">Password
+                <input th:field="${newUser.password}" type="password" name="password"class="form-control"
+                       id="password">
+            </label>
+            <button type="submit" class="btn btn-lg btn-primary btn-block w-50" >Register</button>
+        </form>
+    </div>
 </div>
 
 </body>
