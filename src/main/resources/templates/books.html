@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Books</title>
     <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
-
 </head>
 <body>
 
@@ -28,13 +27,18 @@
                 <th class="column-header">Price</th>
                 <th class="column-header">Image</th>
             </tr>
-            <tr th:each="book:${books}" >
+            <tr th:each="book,ittr:${books}" >
                 <td th:text="${book.getBookName()}"></td>
                 <td th:text="${book.getAuthor()}"></td>
                 <td >null</td>
                 <td >null</td>
-                <td th:text="|¥     ${book.getPrice()}|"></td>
-                <td>null</td>
+                <td th:text="|¥${book.getPrice()}|"></td>
+                <td>
+                    <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >
+                        <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>
+                        <input type="submit"value="Remove" />
+                    </form>
+                </td>
             </tr>
         </table>
     </div>

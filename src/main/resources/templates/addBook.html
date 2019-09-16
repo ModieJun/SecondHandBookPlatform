@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Book</title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+</head>
+<body>
+<div>
+    <h1 class="h1">Second Hand Book Platform</h1>
+    <h2 class="h2 text-center">Add Book</h2>
+</div>
+<div>
+    <form action="/books/add" th:object="${newBook}" method="post">
+        <label for="book_name">Book Name:</label><input type="text" name="book_name" id="book_name" th:field="*{bookName}">
+        <label for="author">Author:</label><input type="text" name="author" id="author" th:field="*{author}">
+        <label for="price">Price</label><input type="number" name="price" id="price" step="0.01" min="0" th:field="*{price}">
+        <button type="submit"  class="btn btn-primary btn-block btn-lg">Add Book</button>
+    </form>
+</div>
+
+
+</body>
+</html>

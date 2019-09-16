@@ -1,23 +1,19 @@
 package com.junjie.bookplatform.Controllers;
 
 import com.junjie.bookplatform.DB.BookRepository;
-import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Security.SecurityService;
 import com.junjie.bookplatform.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -44,7 +40,7 @@ public class HomeController {
         if (!authorities.contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
             return "redirect:/";
         }
-        return"login";
+        return "login";
     }
 
     @GetMapping(value = "/register")
@@ -59,10 +55,10 @@ public class HomeController {
     }
 
     @PostMapping(value = "/register")
-    public String registerUser(@ModelAttribute("newUser")User u, HttpServletRequest request) {
+    public String registerUser(@ModelAttribute("newUser") User u, HttpServletRequest request) {
         if (userService.addUser(u)) {
             //autoLogin
-            securityService.autoLogin(u.getUsername(),u.getPassword(),request);
+            securityService.autoLogin(u.getUsername(), u.getPassword(), request);
             return "redirect:/";
         }
         return "registration";
@@ -79,6 +75,5 @@ public class HomeController {
         User user = userService.getUser(u);
         userService.removeUser(user);
         return "redirect:/logout";
-
     }
 }

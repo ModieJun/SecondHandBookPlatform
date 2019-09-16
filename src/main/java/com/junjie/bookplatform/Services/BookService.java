@@ -14,6 +14,7 @@ public interface BookService {
 
     Book getBook(String book_name);
 
+    Book getBookById(Long id);
 
     List<Book> getBooks();
 }
