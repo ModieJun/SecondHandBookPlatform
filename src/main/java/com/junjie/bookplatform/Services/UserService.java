@@ -5,7 +5,7 @@ import com.junjie.bookplatform.Model.User;
 public interface UserService {
     boolean addUser(User user);
 
-    boolean removeUser(String username);
+    void removeUser(User user);
 
     User updateUser(User user);
 

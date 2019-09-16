@@ -1,14 +1,12 @@
 package com.junjie.bookplatform.Model;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Entity(name = "User")
 @Table(name = "user")
 public class User {
 
@@ -26,11 +24,6 @@ public class User {
     @Column(unique = true)
     private String wechat_id;
 
-//    @OneToMany(mappedBy = "id")
-//    private Set<Book> listedBooks;
-//
-//    @OneToMany(mappedBy = "id")
-//    private Set<Book> boughtBooks;
 
     public User() {
     }
@@ -39,6 +32,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.wechat_id = wechat_id;
+    }
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
 
@@ -70,19 +67,4 @@ public class User {
         this.wechat_id = wechat_id;
     }
 
-//    public Set<Book> getListedBooks() {
-//        return listedBooks;
-//    }
-//
-//    public void setListedBooks(Set<Book> listedBooks) {
-//        this.listedBooks = listedBooks;
-//    }
-//
-//    public Set<Book> getBoughtBooks() {
-//        return boughtBooks;
-//    }
-//
-//    public void setBoughtBooks(Set<Book> boughtBooks) {
-//        this.boughtBooks = boughtBooks;
-//    }
 }

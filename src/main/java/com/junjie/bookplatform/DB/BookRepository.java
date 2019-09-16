@@ -1,6 +1,7 @@
 package com.junjie.bookplatform.DB;
 
 import com.junjie.bookplatform.Model.Book;
+import com.junjie.bookplatform.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findBooksByBookName(@Param("bN") String bookName);
 
     Optional<Book> findById(Long id);
+
+    Book findByBookName(String bookName);
+
+    void deleteAllByBookOwner(User u);
 }
