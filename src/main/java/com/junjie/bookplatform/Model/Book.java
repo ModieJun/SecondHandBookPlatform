@@ -1,6 +1,8 @@
 package com.junjie.bookplatform.Model;
 
 import io.micrometer.core.lang.NonNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -16,8 +18,10 @@ public class Book {
 
     private String author;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "book_owner_id",referencedColumnName = "user_id")
+//    @OnDelete --- very important for what happens when parent is deleted
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User bookOwner;
 
 
