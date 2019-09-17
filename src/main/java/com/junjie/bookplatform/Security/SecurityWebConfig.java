@@ -17,19 +17,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
-    private  final  UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     public SecurityWebConfig(@Qualifier("customUserDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Bean
-    public  PasswordEncoder getPasswordEncoder(){
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
         //service taking to DAO
@@ -47,15 +47,29 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(getPasswordEncoder());
     }
 
+    /*
+    TODO :
+        Still need to Add User authentication for adding and deleting Books
+          2.  Add filters
+          3. Add Form Validators
+          3.  Add Department Entity
+//        1.  Need to implement buy Book
+
+
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/resources/**","/h2-console/**","/console/**")
-                .permitAll()
-                    .and().authorizeRequests().antMatchers("/").authenticated()
-                    .and()
-                .formLogin().loginPage("/login").permitAll()
-                    .and()
-                .logout().logoutUrl("/logout").permitAll();
+        http
+                .authorizeRequests().antMatchers("/resources/**","/public/**", "/h2-console/**", "/console/**").permitAll()
+                .and()
+                    .authorizeRequests().antMatchers("/","/register","/books/").permitAll()
+                .and()
+                    .authorizeRequests().antMatchers("/books/add", "/books/remove","/profile").access("hasRole('ROLE_USER')")
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin().loginPage("/login").permitAll()
+                .and()
+                    .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

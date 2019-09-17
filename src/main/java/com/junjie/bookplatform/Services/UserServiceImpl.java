@@ -25,25 +25,6 @@ public class UserServiceImpl  implements UserService{
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.bookRepository = bookRepository;
-
-        User u = new User("jj","123");
-        User u2 = new User("123","123");
-        this.addUser(u);
-        this.addUser(u2);
-        Book b  =  new Book("WTF","Author",19.2);
-        Book b1  =  new Book("b1","Author",13.2);
-        Book b2  =  new Book("WTb2F","Author",12.2);
-        u=this.getUser(u.getUsername());
-        u2 = this.getUser(u2.getUsername());
-        b.setBookOwner(u);
-        b1.setBookOwner(u2);
-        b2.setBookOwner(u2);
-        bookRepository.save(b);
-        bookRepository.save(b1);
-        bookRepository.save(b2);
-//        bookRepository.delete(b1);
-//        bookRepository.delete(b2);
-//        userRepository.delete(u2);
     }
 
     /**

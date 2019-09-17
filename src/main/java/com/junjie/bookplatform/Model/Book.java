@@ -26,7 +26,8 @@ public class Book {
 
 
     @ManyToOne( targetEntity = User.class)
-    @JoinColumn(name = "buyer_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "buyer_id",referencedColumnName = "user_id",nullable = true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User buyer;
 
     @NonNull

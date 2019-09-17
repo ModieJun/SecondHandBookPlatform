@@ -28,13 +28,14 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public boolean addBook(Book book, User u) {
+        book.setBookOwner(u);
         bookRepository.save(book);
         return true;
     }
 
     @Transactional
     @Override
-    public boolean deleteBook(Book book, User u) {
+    public boolean deleteBook(Book book) {
         bookRepository.delete(book);
         return true;
     }
@@ -52,6 +53,12 @@ public class BookServiceImpl implements BookService {
     public Book getBook(String book_name) {
         Book b = bookRepository.findByBookName(book_name);
         return b;
+    }
+
+    @Override
+    public Book buyBook(Book b, User user) {
+        b.setBuyer(user);
+        return bookRepository.save(b);
     }
 
     @Override

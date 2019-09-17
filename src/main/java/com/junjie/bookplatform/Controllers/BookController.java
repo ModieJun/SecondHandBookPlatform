@@ -5,6 +5,7 @@ import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.UserService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,8 @@ public class BookController {
     @Autowired
     private UserService userService;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
+
     @GetMapping("/")
     public String allBooks(Model model) {
         model.addAttribute("books", bookService.getBooks());
@@ -39,7 +42,6 @@ public class BookController {
     @PostMapping("/add")
     public String addBook(@ModelAttribute("newBook") Book book) {
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        book.setBookOwner(u);
         bookService.addBook(book, u);
         return "redirect:/";
     }
@@ -49,8 +51,26 @@ public class BookController {
     public String removeBook( HttpServletRequest request) {
         Long id = Long.valueOf(request.getParameter("book_id"));
         Book b = bookService.getBookById(id);
-        LoggerFactory.getLogger(BookController.class).warn("Book deleted: " + b.getBookName());
-        bookService.deleteBook(b, new User());
+        LOGGER.warn("Book deleted: " + b.getBookName());
+        bookService.deleteBook(b);
+        return "redirect:/";
+    }
+
+    @PostMapping("/buy")
+    public String buyBook(HttpServletRequest request) {
+        Long id = Long.valueOf(request.getParameter("book_id"));
+        Book b = bookService.getBookById(id);
+        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userService.getUser(username);
+        if (u == null) {
+            return "redirect:/login";
+        }
+
+        LOGGER.info("Buying Book : " + b.getBookName() + " User id: "+u.getUser_Id());
+        if (b.getBookOwner().getUsername().equals(u.getUsername())  ) {
+            return "redirect:/books/";
+        }
+        bookService.buyBook(b,u);
         return "redirect:/";
     }
 

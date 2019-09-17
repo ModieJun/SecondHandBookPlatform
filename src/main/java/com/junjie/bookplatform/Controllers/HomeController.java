@@ -76,4 +76,9 @@ public class HomeController {
         userService.removeUser(user);
         return "redirect:/logout";
     }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
 }
