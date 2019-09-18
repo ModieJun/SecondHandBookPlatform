@@ -6,10 +6,17 @@ import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.Name;
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +26,8 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     private final UserRepository userRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     public BookServiceImpl(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
@@ -56,7 +65,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @QueryHints({@QueryHint(name = "java.persistence.lock.timout",value = "3000")})
     public Book buyBook(Book b, User user) {
+        Book book = this.getBookById(b.getId());
+        logger.warn("DEBUG BOOK BUYER: " + book.getBuyer());
+        if (book.getBuyer() != null) {
+            return book;
+        }
+        //Object passed from the Controller so, if i set before checking the BUYER() the buyer will be set for the obj
         b.setBuyer(user);
         return bookRepository.save(b);
     }
