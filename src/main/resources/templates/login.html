@@ -6,6 +6,10 @@
     <link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div class="container text-center">
+    <h1 class="h1">Second Hand Book Platform</h1>
+    <a href="/" class="hyperlink">Home</a>
+</div>
 <div class="container">
     <form action="/login" method="post" class="form-group">
         <h2 class="h2">Log in</h2>
@@ -22,6 +26,10 @@
             <br>
             <button class="btn btn-lg btn-primary btn-block w-50"  type="submit">Log In</button>
         </div>
+    </form>
+    <br>
+    <form action="/register"method="get">
+        <button class="btn btn-primary btn-lg btn-block w-25    ">Register</button>
     </form>
 </div>
 

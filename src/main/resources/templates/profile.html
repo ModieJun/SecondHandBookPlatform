@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container text-center">
+    <h1 class="h1">Second Hand Book Platform</h1>
+    <a href="/books/" class="hyperlink">Get all Books</a>
+    <a href="/books/add" class="hyperlink">Add Book</a>
+</div>
+
+<div>
+    <form action="/logout" method="get" class="form-group">
+        <button type="submit" class=" btn btn-lg btn-block btn-primary">Logout</button>
+    </form>
+</div>
+<div class="mt-4">
+    <form action="/deleteUser">
+        <button type="submit" class="btn btn-lg btn-block btn-primary">Delete user</button>
+    </form>
+</div>
+
+</body>
+</html>

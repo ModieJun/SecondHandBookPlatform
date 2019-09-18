@@ -6,6 +6,12 @@
     <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
 </head>
 <body>
+<div class="container text-center">
+    <h1 class="h1">Second Hand Book Platform</h1>
+    <a href="/books/add" class="hyperlink">Add Book</a>
+    <a href="/profile" class="hyperlink">Go to Profile</a>
+</div>
+
 
 <div>
     <div class="container text-center">
@@ -36,7 +42,13 @@
                 <td>
                     <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >
                         <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>
-                        <input type="submit"value="Remove" />
+                        <input type="submit"value="Remove"/>
+                    </form>
+                </td>
+                <td>
+                    <form action="/books/buy" method="post" content="application/x-www-form-urlencoded">
+                        <input type="number" name="book_id" id="buy_book_id" th:value="${book.getId()}" hidden>
+                        <input type="submit" value="Buy"/>
                     </form>
                 </td>
             </tr>
