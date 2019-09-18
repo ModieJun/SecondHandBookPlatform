@@ -1,6 +1,5 @@
 package com.junjie.bookplatform.Controllers;
 
-import com.junjie.bookplatform.DB.BookRepository;
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Services.BookService;
@@ -25,7 +24,7 @@ public class BookController {
     @Autowired
     private UserService userService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @GetMapping("/")
     public String allBooks(Model model) {
@@ -51,13 +50,29 @@ public class BookController {
     public String removeBook( HttpServletRequest request) {
         Long id = Long.valueOf(request.getParameter("book_id"));
         Book b = bookService.getBookById(id);
-        LOGGER.warn("Book deleted: " + b.getBookName());
+        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (b.getBookOwner().getUser_Id() != u.getUser_Id()) {
+            return "/";
+        }
+        logger.warn("Book deleted: " + b.getBookName());
         bookService.deleteBook(b);
         return "redirect:/";
     }
 
     @PostMapping("/buy")
     public String buyBook(HttpServletRequest request) {
+        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+        User u = userService.getUser(username);
+        Book book = bookService.getBookById(Long.valueOf(request.getParameter("book_id")));
+        logger.warn("Book id Buy: " + book.getId());
+        if (bookService.buyBook(book,u)) {
+            return "success";
+        }
+        return "failure";
+    }
+
+    @PostMapping("/buy/confirm")
+    public String buyBookConfirm(HttpServletRequest request,Model model) {
         Long id = Long.valueOf(request.getParameter("book_id"));
         Book b = bookService.getBookById(id);
         String username=SecurityContextHolder.getContext().getAuthentication().getName();
@@ -65,13 +80,12 @@ public class BookController {
         if (u == null) {
             return "redirect:/login";
         }
-
-        LOGGER.info("Buying Book : " + b.getBookName() + " User id: "+u.getUser_Id());
-        if (b.getBookOwner().getUsername().equals(u.getUsername())  ) {
+        logger.info("Buying Book : " + b.getBookName() + " User id: "+u.getUser_Id());
+        if (b.getBookOwner().getUsername().equals(u.getUsername())) {
             return "redirect:/books/";
         }
-        bookService.buyBook(b,u);
-        return "redirect:/";
+        model.addAttribute("confirmBook",b);
+        return "confirm";
     }
 
 

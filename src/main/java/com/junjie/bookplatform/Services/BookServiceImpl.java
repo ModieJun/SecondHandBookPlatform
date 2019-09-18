@@ -67,15 +67,16 @@ public class BookServiceImpl implements BookService {
     @Override
     @Lock(LockModeType.PESSIMISTIC_READ)
     @QueryHints({@QueryHint(name = "java.persistence.lock.timout",value = "3000")})
-    public Book buyBook(Book b, User user) {
+    public boolean buyBook(Book b, User user) {
         Book book = this.getBookById(b.getId());
         logger.warn("DEBUG BOOK BUYER: " + book.getBuyer());
         if (book.getBuyer() != null) {
-            return book;
+            return false;
         }
         //Object passed from the Controller so, if i set before checking the BUYER() the buyer will be set for the obj
         b.setBuyer(user);
-        return bookRepository.save(b);
+        bookRepository.save(b);
+        return true;
     }
 
     @Override

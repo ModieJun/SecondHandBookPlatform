@@ -47,7 +47,6 @@ public class HomeController {
     public String register(Model m) {
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         if (!authorities.contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
-
             return "redirect:/";
         }
         m.addAttribute("newUser", new User());

@@ -16,7 +16,7 @@ public interface BookService {
 
     Book getBookById(Long id);
 
-    Book buyBook(Book b, User user);
+    boolean buyBook(Book b, User user);
 
     List<Book> getBooks();
 }
