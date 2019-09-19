@@ -1,9 +1,11 @@
 package com.junjie.bookplatform.Controllers;
 
+import com.junjie.bookplatform.Components.ImageResizer;
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.UserService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 @Controller
@@ -38,10 +45,10 @@ public class BookController {
         return "addBook";
     }
 
-    @PostMapping("/add")
-    public String addBook(@ModelAttribute("newBook") Book book) {
+    @PostMapping("/add" )
+    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file) {
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        bookService.addBook(book, u);
+        bookService.addBook(book, u,file);
         return "redirect:/";
     }
 
@@ -88,5 +95,14 @@ public class BookController {
         return "confirm";
     }
 
+    @GetMapping("/image/{id}")
+    public void showBookImg(@PathVariable String id, HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpeg");
+        Book book = bookService.getBookById(Long.valueOf(id));
+        if (book.getImage()!=null) {
+            InputStream is = new ByteArrayInputStream(book.getImage());
+            IOUtils.copy(is,response.getOutputStream());
+        }
 
+    }
 }

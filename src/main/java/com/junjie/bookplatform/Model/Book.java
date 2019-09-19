@@ -34,6 +34,9 @@ public class Book {
     @Column(length = 10,precision = 2)
     private Double price;
 
+    @Lob
+    private byte[] image;
+
     public Book() {
 
     }
@@ -88,4 +91,11 @@ public class Book {
         return buyer;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

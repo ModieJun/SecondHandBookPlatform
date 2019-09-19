@@ -62,7 +62,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().antMatchers("/resources/**","/public/**", "/h2-console/**", "/console/**").permitAll()
                 .and()
-                    .authorizeRequests().antMatchers("/","/register","/books/").permitAll()
+                    .authorizeRequests().antMatchers("/","/register","/books/","/books/image/**").permitAll()
                 .and()
                     .authorizeRequests().antMatchers("/books/add", "/books/remove","/profile").access("hasRole('ROLE_USER')")
                     .anyRequest().authenticated()

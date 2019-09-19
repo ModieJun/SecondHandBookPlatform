@@ -30,6 +30,11 @@
                 <td>Price</td>
                 <td th:text="|¥${confirmBook.getPrice()}|"></td>
             </tr>
+            <tr>
+                <td>Book Img:</td>
+                <td>
+                    <img th:src="@{'/books/image/'+${confirmBook.getId()}}" th:alt="${confirmBook.getBookName()}" class="w-50"></td>
+            </tr>
         </table>
     </div>
 

@@ -39,11 +39,14 @@
                 <td >null</td>
                 <td >null</td>
                 <td th:text="|¥${book.getPrice()}|"></td>
-                <td>
-                    <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >
-                        <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>
-                        <input type="submit"value="Remove"/>
-                    </form>
+                <td class="table-row-cell">
+                    <div class="align-content-center">
+                        <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-50">
+                    </div>
+<!--                    <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >-->
+<!--                        <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>-->
+<!--                        <input type="submit"value="Remove"/>-->
+<!--                    </form>-->
                 </td>
                 <td>
                     <form action="/books/buy/confirm" method="post" content="application/x-www-form-urlencoded">

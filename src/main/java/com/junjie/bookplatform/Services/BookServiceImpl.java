@@ -1,24 +1,23 @@
 package com.junjie.bookplatform.Services;
 
+import com.junjie.bookplatform.Components.ImageResizer;
 import com.junjie.bookplatform.DB.BookRepository;
 import com.junjie.bookplatform.DB.UserRepository;
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.naming.Name;
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -27,16 +26,32 @@ public class BookServiceImpl implements BookService {
 
     private final UserRepository userRepository;
 
+    private final ImageResizer imageResizer;
+
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    public BookServiceImpl(BookRepository bookRepository, UserRepository userRepository) {
+    public BookServiceImpl(BookRepository bookRepository, UserRepository userRepository, ImageResizer imageResizer) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
+        this.imageResizer = imageResizer;
     }
 
     @Transactional
     @Override
-    public boolean addBook(Book book, User u) {
+    public boolean addBook(Book book, User u, MultipartFile f) {
+        if (f != null) {
+            String imgName = StringUtils.cleanPath(f.getOriginalFilename());
+            try {
+                if (imgName.contains("..")) {
+                    return false;
+                }
+                //Resize Image
+                book.setImage(imageResizer.resize(f));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
         book.setBookOwner(u);
         bookRepository.save(book);
         return true;
