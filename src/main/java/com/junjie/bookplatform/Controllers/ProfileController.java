@@ -52,9 +52,13 @@ public class ProfileController {
 
     //consumes = {"application/x-www-form-urlencoded"}
     @GetMapping("/myBooks/delete")
-    public String removeBookConfirmed( HttpServletRequest request) {
+    public String removeBookConfirmed(@RequestParam(name = "book_id") String book_id, HttpServletRequest request ,Model model) {
+//        Book b = bookService.getBookById(Long.valueOf(request.getParameter("book_id")));
+        Book b = bookService.getBookById(Long.valueOf(book_id));
 
-        return "";
+        model.addAttribute("confirmBook",b);
+        model.addAttribute("deleteBook", true);
+        return "confirm";
     }
 
     @PostMapping("/myBooks/delete/confirm")
@@ -68,7 +72,7 @@ public class ProfileController {
         }
         logger.warn("Deleting Book: " + b.getBookName() + " , Book Id: " + b.getId());
         bookService.deleteBook(b);
-        return "";
+        return "success";
     }
     /*
         View all Bought Books

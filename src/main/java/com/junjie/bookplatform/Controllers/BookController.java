@@ -79,6 +79,7 @@ public class BookController {
             return "redirect:/books/";
         }
         model.addAttribute("confirmBook",b);
+        model.addAttribute("buyBook",true);
         return "confirm";
     }
 

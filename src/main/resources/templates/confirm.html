@@ -33,15 +33,23 @@
             <tr>
                 <td>Book Img:</td>
                 <td>
-                    <img th:src="@{'/books/image/'+${confirmBook.getId()}}" th:alt="${confirmBook.getBookName()}" class="w-50"></td>
+                    <img th:src="@{'/books/image/'+${confirmBook.getId()}}" th:alt="${confirmBook.getBookName()}"
+                         class="w-50"></td>
             </tr>
         </table>
     </div>
-
-    <form action="/books/buy" method="post" th:object="${confirmBook}" class="mt-5">
-        <input type="number"  name="book_id" th:value="${confirmBook.id}" hidden>
-        <button type="submit" class="btn btn-block btn-primary btn-success">CONFIRM</button>
-    </form>
+    <div  th:if="${buyBook}">
+        <form action="/books/buy" method="post" th:object="${confirmBook}" class="mt-5">
+            <input type="number" name="book_id" th:value="${confirmBook.id}" hidden>
+            <button type="submit" class="btn btn-block btn-primary btn-success">CONFIRM</button>
+        </form>
+    </div>
+    <div th:if="${deleteBook}">
+        <form action="/profile/myBooks/delete/confirm" method="post" th:object="${confirmBook}" class="mt-5">
+            <input type="number" name="book_id" th:value="${confirmBook.id}" hidden>
+            <button type="submit" class="btn btn-block btn-primary btn-danger">Delete</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

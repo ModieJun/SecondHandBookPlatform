@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAllBooksUserLoggedIn(User user) {
-        return bookRepository.findBooksByBookOwnerNot(user);
+        return bookRepository.findBooksByBookOwner(user);
     }
 
     @Override

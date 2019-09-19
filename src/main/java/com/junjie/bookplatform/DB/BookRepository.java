@@ -18,6 +18,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 //    @Query(value = "select b from Book  b where  b.bookOwner <> uid ")
     List<Book> findBooksByBookOwnerNot( User user);
 
+    List<Book> findBooksByBookOwner(User user);
+
     List<Book> findBooksByBuyer(User u);
 
     Optional<Book> findById(Long id);

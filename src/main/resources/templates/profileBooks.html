@@ -45,7 +45,7 @@
                     </td>
                     <td>
                         <div class="flex-fill">
-                            <form action="/books/delete">
+                            <form action="/books/delete" method="get">
                                 <input type="number" name="book_id" id="book_edit" hidden th:value="${book.getId()}">
                                 <button type="submit" class="btn btn-block btn-primary">Edit</button>
                             </form>
@@ -53,7 +53,7 @@
                     </td>
                     <td>
                         <div class="flex-fill">
-                            <form action="/books/delete">
+                            <form action="/profile/myBooks/delete">
                                 <input type="number" name="book_id" id="book_delete" hidden th:value="${book.getId()}">
                                 <button type="submit" class="btn btn-block btn-danger">Delete</button>
                             </form>
@@ -97,8 +97,6 @@
                 <td class="font-italic" th:text="${book.getBuyer().getWechat_id()}"></td>
             </tr>
         </table>
-
-
     </div>
     <!--   END OF IF    -->
 
