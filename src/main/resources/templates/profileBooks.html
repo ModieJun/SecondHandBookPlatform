@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+
+    <!--    IF ITS VIEWING THE USER LISTED BOOKS  -->
+    <div th:if="${myBooks}" class="container">
+        <div>
+            <h2 class="h2">My Books</h2>
+        </div>
+        <div class="">
+            <table class="table table-bordered">
+                <tr class="bg-light">
+                    <th class="column-header">Book Name</th>
+                    <th class="column-header">Book Author</th>
+                    <th class="column-header">Major</th>
+                    <th class="column-header">Year Needed</th>
+                    <th class="column-header">Price</th>
+                    <th class="column-header">Image</th>
+                    <th class="column-header">Edit</th>
+                    <th class="column-header">Remove</th>
+                </tr>
+                <tr th:each="book,itr${myBooks}">
+                    <td th:text="${book.getBookName()}"></td>
+                    <td th:text="${book.getAuthor()}"></td>
+                    <td>null</td>
+                    <td>null</td>
+                    <td th:text="|¥${book.getPrice()}|"></td>
+                    <td>
+                        <div class="align-content-center">
+                            <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-50">
+                        </div>
+                    </td>
+                    <td class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <form action="/books/delete">
+                                <input type="number" name="book_id" id="book_edit" hidden th:value="${book.getId()}">
+                                <button type="submit" class="btn btn-block btn-primary" >Edit</button>
+                            </form>
+                        </div>
+                        <div class="flex-fill">
+                            <form action="/books/delete">
+                                <input type="number" name="book_id" id="book_delete" hidden th:value="${book.getId()}">
+                                <button type="submit" class="btn btn-block btn-danger" >Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+    <!--    END OF IF   -->
+
+    <!--    IF ITS THE BOOKS THE USER HAS BOUGHT    -->
+    <div th:if="${boughtBooks}">
+
+
+    </div>
+    <!--   END OF IF    -->
+
+
+</div>
+</body>
+</html>

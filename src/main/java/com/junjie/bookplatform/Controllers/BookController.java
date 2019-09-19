@@ -52,19 +52,6 @@ public class BookController {
         return "redirect:/";
     }
 
-    //consumes = {"application/x-www-form-urlencoded"}
-    @PostMapping("/delete")
-    public String removeBook( HttpServletRequest request) {
-        Long id = Long.valueOf(request.getParameter("book_id"));
-        Book b = bookService.getBookById(id);
-        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (b.getBookOwner().getUser_Id() != u.getUser_Id()) {
-            return "/";
-        }
-        logger.warn("Book deleted: " + b.getBookName());
-        bookService.deleteBook(b);
-        return "redirect:/";
-    }
 
     @PostMapping("/buy")
     public String buyBook(HttpServletRequest request) {
