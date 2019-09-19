@@ -64,7 +64,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests().antMatchers("/","/register","/books/","/books/image/**").permitAll()
                 .and()
-                    .authorizeRequests().antMatchers("/books/add", "/books/remove","/profile").access("hasRole('ROLE_USER')")
+                    .authorizeRequests().antMatchers("/books/add", "/books/remove","/profile/**").access("hasRole('ROLE_USER')")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin().loginPage("/login").permitAll()
