@@ -103,4 +103,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
+
+    @Override
+    public List<Book> getAllBooksUserLoggedIn(User user) {
+        return bookRepository.findBooksByBookOwnerNot(user);
+    }
+
+    @Override
+    public List<Book> getAllBoughtBooks(User user) {
+        return bookRepository.findBooksByBuyer(user);
+    }
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,11 @@ public class ProfileController {
         View ALl the Books the user has Listed
      */
     @GetMapping("/myBooks")
-    public String myBooks() {
-        return  " ";
+    public String myBooks(Model model) {
+        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title", "My Books");
+        model.addAttribute("myBooks",bookService.getAllBooksUserLoggedIn(u));
+        return  "profileBooks";
     }
 
     @RequestMapping("/myBooks/edit")
@@ -70,8 +74,11 @@ public class ProfileController {
         View all Bought Books
      */
     @GetMapping("/myBought")
-    public String viewBought() {
-        return "";
+    public String viewBought(Model model) {
+        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Bought Books");
+        model.addAttribute("boughtBooks",bookService.getAllBoughtBooks(u));
+        return "profileBooks";
     }
 
     /*

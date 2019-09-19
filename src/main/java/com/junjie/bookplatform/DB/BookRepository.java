@@ -12,12 +12,18 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    @Query("select b from Book b where b.bookName like CONCAT('%',:bN,'%' )")
+    @Query(value = "select b from Book b where b.bookName like CONCAT('%',:bN,'%' )")
     List<Book> findBooksByBookName(@Param("bN") String bookName);
+
+//    @Query(value = "select b from Book  b where  b.bookOwner <> uid ")
+    List<Book> findBooksByBookOwnerNot( User user);
+
+    List<Book> findBooksByBuyer(User u);
 
     Optional<Book> findById(Long id);
 
     Book findByBookName(String bookName);
 
     void deleteAllByBookOwner(User u);
+
 }

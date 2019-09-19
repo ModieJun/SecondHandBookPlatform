@@ -20,4 +20,8 @@ public interface BookService {
     boolean buyBook(Book b, User user);
 
     List<Book> getBooks();
+
+    List<Book> getAllBooksUserLoggedIn(User user);
+
+    List<Book> getAllBoughtBooks(User user);
 }
