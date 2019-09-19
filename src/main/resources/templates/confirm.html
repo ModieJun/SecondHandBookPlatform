@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm</title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-4 border border-dark p-5">
+    <div>
+        <h2 class="h2">Confirmation</h2>
+        <table class="table-borderless">
+            <tr>
+                <td>Name</td>
+                <td th:text="${confirmBook.getBookName()}"></td>
+            </tr>
+            <tr>
+                <td>Author</td>
+                <td th:text="${confirmBook.getAuthor()}"></td>
+            </tr>
+            <tr>
+                <td>Major</td>
+                <td th:text="null"></td>
+            </tr>
+            <tr>
+                <td>Year Needed</td>
+                <td th:text="null"></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td th:text="|¥${confirmBook.getPrice()}|"></td>
+            </tr>
+        </table>
+    </div>
+
+    <form action="/books/buy" method="post" th:object="${confirmBook}" class="mt-5">
+        <input type="number"  name="book_id" th:value="${confirmBook.id}" hidden>
+        <button type="submit" class="btn btn-block btn-primary btn-success">CONFIRM</button>
+    </form>
+</div>
+</body>
+</html>

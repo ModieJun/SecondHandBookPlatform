@@ -46,7 +46,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="/books/buy" method="post" content="application/x-www-form-urlencoded">
+                    <form action="/books/buy/confirm" method="post" content="application/x-www-form-urlencoded">
                         <input type="number" name="book_id" id="buy_book_id" th:value="${book.getId()}" hidden>
                         <input type="submit" value="Buy"/>
                     </form>
