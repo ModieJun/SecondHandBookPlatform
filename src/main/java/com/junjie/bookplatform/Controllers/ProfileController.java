@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/profile")
@@ -32,31 +33,39 @@ public class ProfileController {
     /*
         View ALl the Books the user has Listed
      */
-    @GetMapping("/myBooks")
-    public String myBooks(Model model) {
-        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+    @RequestMapping("/myBooks")
+    public String myBooks(Model model, Principal principal) {
+        User u = userService.getUser(principal.getName());
         model.addAttribute("title", "My Books");
-        model.addAttribute("myBooks",bookService.getAllBooksUserLoggedIn(u));
-        return  "profileBooks";
+        model.addAttribute("myBooks", bookService.getAllBooksUserLoggedIn(u));
+        return "profileBooks";
     }
 
     @RequestMapping("/myBooks/edit")
-    public String editMyBook(HttpServletRequest request) {
-        return "";
+    public String editMyBook(HttpServletRequest request, Model model) {
+        Long book_id = Long.valueOf(request.getParameter("book_id"));
+        model.addAttribute("editBook", bookService.getBookById(book_id));
+        return "editBook";
     }
 
     @PostMapping("/myBooks/edit/save")
-    public String saveEdit(@ModelAttribute("editBook") Book book) {
-        return "";
+    public String saveEdit(@RequestParam("author") String author, @RequestParam("year_needed") String year_needed, @RequestParam("price") Double price,@RequestParam("bookName") String bookName,@RequestParam("book_id")Long id) {
+            logger.warn("Book Name:  "+ bookName );
+        Book b = bookService.getBookById(id);
+        b.setBookName(bookName).setAuthor(author).setPrice(price).setYearNeed(year_needed);
+            logger.warn("ID: " + b.getId() +"Param: " + bookName + " Author :" + author +
+                " year_needed: " + year_needed + " Price : " + price);
+        bookService.updateBook(b);
+        return "redirect:/profile/myBooks";
     }
 
     //consumes = {"application/x-www-form-urlencoded"}
     @GetMapping("/myBooks/delete")
-    public String removeBookConfirmed(@RequestParam(name = "book_id") String book_id, HttpServletRequest request ,Model model) {
+    public String removeBookConfirmed(@RequestParam(name = "book_id") String book_id, HttpServletRequest request, Model model) {
 //        Book b = bookService.getBookById(Long.valueOf(request.getParameter("book_id")));
         Book b = bookService.getBookById(Long.valueOf(book_id));
 
-        model.addAttribute("confirmBook",b);
+        model.addAttribute("confirmBook", b);
         model.addAttribute("deleteBook", true);
         return "confirm";
     }
@@ -67,21 +76,22 @@ public class ProfileController {
         Book b = bookService.getBookById(id);
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         //preventative measure
-        if (b.getBookOwner().getUser_Id() != u.getUser_Id() ){
+        if (b.getBookOwner().getUser_Id() != u.getUser_Id()) {
             return "/";
         }
         logger.warn("Deleting Book: " + b.getBookName() + " , Book Id: " + b.getId());
         bookService.deleteBook(b);
         return "success";
     }
+
     /*
         View all Bought Books
      */
     @GetMapping("/myBought")
     public String viewBought(Model model) {
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("title","Bought Books");
-        model.addAttribute("boughtBooks",bookService.getAllBoughtBooks(u));
+        model.addAttribute("title", "Bought Books");
+        model.addAttribute("boughtBooks", bookService.getAllBoughtBooks(u));
         return "profileBooks";
     }
 
@@ -92,8 +102,6 @@ public class ProfileController {
     public String viewBoughtBook(HttpServletRequest request) {
         return "";
     }
-
-
 
 
 }
