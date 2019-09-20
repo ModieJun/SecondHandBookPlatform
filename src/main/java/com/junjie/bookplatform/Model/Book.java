@@ -20,28 +20,29 @@ public class Book {
 
     private String author;
 
-    @ManyToOne(targetEntity = User.class,fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_owner_id",referencedColumnName = "user_id")
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_owner_id", referencedColumnName = "user_id")
 //    @OnDelete --- very important for what happens when parent is deleted
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User bookOwner;
 
 
-    @ManyToOne( targetEntity = User.class)
-    @JoinColumn(name = "buyer_id",referencedColumnName = "user_id",nullable = true)
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "buyer_id", referencedColumnName = "user_id", nullable = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User buyer;
 
     @NonNull
-    @Column(length = 10,precision = 2)
+    @Column(length = 10, precision = 2)
     private Double price;
 
     @NotNull
     @Column(length = 20)
     private String yearNeed;
 
-    @Lob
-    private byte[] image;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Img.class)
+    @JoinColumn(name = "img_id",referencedColumnName = "id")
+    private Img image;
 
     public Book() {
 
@@ -51,10 +52,10 @@ public class Book {
         return id;
     }
 
-    public Book(String name, String author , Double price) {
+    public Book(String name, String author, Double price) {
         this.bookName = name;
         this.author = author;
-        this.price=price;
+        this.price = price;
     }
 
 
@@ -112,11 +113,11 @@ public class Book {
         return buyer;
     }
 
-    public byte[] getImage() {
+    public Img getImage() {
         return image;
     }
 
-    public Book setImage(byte[] image) {
+    public Book setImage(Img image) {
         this.image = image;
         return this;
     }
@@ -130,7 +131,7 @@ public class Book {
                 ", bookOwner=" + bookOwner +
                 ", buyer=" + buyer +
                 ", price=" + price +
-                ", image=" + Arrays.toString(image) +
+                ", image=" + image +
                 '}';
     }
 }

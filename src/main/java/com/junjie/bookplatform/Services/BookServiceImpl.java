@@ -4,6 +4,7 @@ import com.junjie.bookplatform.Components.ImageResizer;
 import com.junjie.bookplatform.DB.BookRepository;
 import com.junjie.bookplatform.DB.UserRepository;
 import com.junjie.bookplatform.Model.Book;
+import com.junjie.bookplatform.Model.Img;
 import com.junjie.bookplatform.Model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,9 @@ public class BookServiceImpl implements BookService {
                     return false;
                 }
                 //Resize Image
-                book.setImage(imageResizer.resize(f));
+                Img img = new Img();
+                img.setFileName(imgName).setImgFile(imageResizer.resize(f));
+                book.setImage(img);
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;

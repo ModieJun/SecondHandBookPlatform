@@ -89,7 +89,7 @@ public class BookController {
         response.setContentType("image/jpeg");
         Book book = bookService.getBookById(Long.valueOf(id));
         if (book.getImage()!=null) {
-            InputStream is = new ByteArrayInputStream(book.getImage());
+            InputStream is = new ByteArrayInputStream(book.getImage().getImgFile());
             IOUtils.copy(is,response.getOutputStream());
         }
 
