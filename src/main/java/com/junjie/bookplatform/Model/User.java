@@ -67,4 +67,13 @@ public class User {
         this.wechat_id = wechat_id;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_Id=" + user_Id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", wechat_id='" + wechat_id + '\'' +
+                '}';
+    }
 }

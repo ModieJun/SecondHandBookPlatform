@@ -67,7 +67,7 @@ public class ProfileController {
         Book b = bookService.getBookById(id);
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         //preventative measure
-        if (b.getBookOwner().getUser_Id() != u.getUser_Id()) {
+        if (b.getBookOwner().getUser_Id() != u.getUser_Id() ){
             return "/";
         }
         logger.warn("Deleting Book: " + b.getBookName() + " , Book Id: " + b.getId());

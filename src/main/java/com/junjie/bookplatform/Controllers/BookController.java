@@ -46,9 +46,10 @@ public class BookController {
     }
 
     @PostMapping("/add" )
-    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file) {
+    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file,@RequestParam("year_needed") String year_need) {
         User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        bookService.addBook(book, u,file);
+        book.setYearNeed(year_need);
+        bookService.addBook(book,u,file);
         return "redirect:/";
     }
 

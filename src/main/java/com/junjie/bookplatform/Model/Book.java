@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "books")
@@ -34,6 +36,10 @@ public class Book {
     @Column(length = 10,precision = 2)
     private Double price;
 
+    @NotNull
+    @Column(length = 20)
+    private String yearNeed;
+
     @Lob
     private byte[] image;
 
@@ -51,36 +57,51 @@ public class Book {
         this.price=price;
     }
 
+
+    public String getYearNeed() {
+        return yearNeed;
+    }
+
+    public Book setYearNeed(String yearNeed) {
+        this.yearNeed = yearNeed;
+        return this;
+    }
+
     public String getBookName() {
         return this.bookName;
     }
 
-    public void setBookName(String bookName) {
+    public Book setBookName(String bookName) {
         this.bookName = bookName;
+        return this;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public Book setAuthor(String author) {
         this.author = author;
+        return this;
     }
 
-    public void setPrice(Double price) {
+    public Book setPrice(Double price) {
         this.price = price;
+        return this;
     }
 
     public Double getPrice() {
         return this.price;
     }
 
-    public void setBookOwner(User bookOwner) {
+    public Book setBookOwner(User bookOwner) {
         this.bookOwner = bookOwner;
+        return this;
     }
 
-    public void setBuyer(User buyer) {
+    public Book setBuyer(User buyer) {
         this.buyer = buyer;
+        return this;
     }
 
     public User getBookOwner() {
@@ -95,7 +116,21 @@ public class Book {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public Book setImage(byte[] image) {
         this.image = image;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookName='" + bookName + '\'' +
+                ", author='" + author + '\'' +
+                ", bookOwner=" + bookOwner +
+                ", buyer=" + buyer +
+                ", price=" + price +
+                ", image=" + Arrays.toString(image) +
+                '}';
     }
 }

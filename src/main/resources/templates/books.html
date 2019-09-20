@@ -37,7 +37,7 @@
                 <td th:text="${book.getBookName()}"></td>
                 <td th:text="${book.getAuthor()}"></td>
                 <td >null</td>
-                <td >null</td>
+                <td th:text="${book.getYearNeed()}"></td>
                 <td th:text="|¥${book.getPrice()}|"></td>
                 <td class="table-row-cell">
                     <div class="align-content-center">

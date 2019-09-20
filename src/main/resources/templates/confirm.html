@@ -10,7 +10,7 @@
     <div>
         <h2 class="h2">Confirmation</h2>
         <table class="table-borderless">
-            <tr>
+            <tr >
                 <td>Name</td>
                 <td th:text="${confirmBook.getBookName()}"></td>
             </tr>
@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td>Year Needed</td>
-                <td th:text="null"></td>
+                <td th:text="${confirmBook.getYearNeed()}"></td>
             </tr>
             <tr>
                 <td>Price</td>
