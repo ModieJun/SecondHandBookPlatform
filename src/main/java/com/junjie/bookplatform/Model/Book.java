@@ -1,11 +1,15 @@
 package com.junjie.bookplatform.Model;
 
 import io.micrometer.core.lang.NonNull;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.Arrays;
 
 @Entity
@@ -16,8 +20,10 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false,length = 100)
     private String bookName;
 
+    @Column(nullable = false,length = 50)
     private String author;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
@@ -36,26 +42,39 @@ public class Book {
     @Column(length = 10, precision = 2)
     private Double price;
 
-    @NotNull
-    @Column(length = 20)
+    @Column(length = 20,nullable = false)
     private String yearNeed;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Img.class)
     @JoinColumn(name = "img_id",referencedColumnName = "id")
     private Img image;
 
+    @CreationTimestamp
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    private Date createdAt;
+
+
+    /*
+    ---------------Constructors------------------
+     */
+
     public Book() {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public Book(String name, String author, Double price) {
+
         this.bookName = name;
         this.author = author;
         this.price = price;
+    }
+
+
+    /*
+            -------------Getter + Setter-----------------
+     */
+    public Long getId() {
+        return id;
     }
 
 
@@ -120,6 +139,10 @@ public class Book {
     public Book setImage(Img image) {
         this.image = image;
         return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.junjie.bookplatform.DB;
 
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,11 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    @Query(value = "select b from Book b where b.bookName like CONCAT('%',:bN,'%' )")
-    List<Book> findBooksByBookName(@Param("bN") String bookName);
 
-//    @Query(value = "select b from Book  b where  b.bookOwner <> uid ")
-    List<Book> findBooksByBookOwnerNot( User user);
+    Page<Book> findAll(Pageable pageable);
+
+    //    @Query(value = "select b from Book  b where  b.bookOwner <> uid ")
+    List<Book> findBooksByBookOwnerNot(User user);
 
     List<Book> findBooksByBookOwner(User user);
 
@@ -26,6 +29,14 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Book findByBookName(String bookName);
 
-    void deleteAllByBookOwner(User u);
+    /*
+     *  All Filtering Methods
+     */
+    @Query("select b from Book  b where (:bn is null or b.bookName like CONCAT('%',:bn,'%') ) and " +
+            "(:yn is null or b.yearNeed=:yn) and (:auth is null or b.author=:auth)")
+    List<Book> getAll(@Param("bn") String book_name, @Param("yn") String year_needed,
+                      @Param("auth")String author, Pageable pageable);
+
+    List<Book> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
 }

@@ -37,7 +37,7 @@ public class ProfileController {
     public String myBooks(Model model, Principal principal) {
         User u = userService.getUser(principal.getName());
         model.addAttribute("title", "My Books");
-        model.addAttribute("myBooks", bookService.getAllBooksUserLoggedIn(u));
+        model.addAttribute("myBooks", bookService.getAllBooksOwner(u));
         return "profileBooks";
     }
 

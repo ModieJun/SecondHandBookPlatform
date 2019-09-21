@@ -1,3 +1,6 @@
+<!--
+  ~ Copyright (c)-- Created By JUNJIE Lin -> On 2019/9/21
+  -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -15,11 +18,48 @@
 
 <div>
     <div class="container text-center">
-        <h2>Filter</h2>
-        <form action=""  method="get"  class="form-group w-75">
-            <label for="bookName">Book Name</label><input class="form-control" type="text" name="bookName" id="bookName" placeholder="Book Name">
-            <label for="bookAuthor"> Book Author</label><input type="text"  class="form-control" name="bookAuthor" id="bookAuthor" placeholder="Book Author">
-            <button type="button" value="submit" class=" mt-1 btn  btn-primary btn-block">Filter</button>
+        <h2>Search</h2>
+        <form th:action="@{/books/search}" method="get" class="form-group w-75">
+            <div class="form-group">
+                <label for="book_name">Book Name</label>
+                <input class="form-control" type="text" name="book_name"
+                       id="book_name"
+                       placeholder="Book Name">
+            </div>
+            <div class="form-group">
+                <label for="author"> Book Author</label>
+                <input type="text" class="form-control" name="author"
+                       id="author" placeholder="Book Author">
+            </div>
+            <div class="form-group">
+                <label for="year" class="label">Year Needed:</label>
+                <select name="year_needed" id="year" th:default="${null}"
+                        class="dropdown ">
+                    <option selected disabled="disabled">Choose Year</option>
+                    <option value="1st Year Semester 1">1st Year Semester 1</option>
+                    <option value="1st Year Semester 2">1st Year Semester 2</option>
+                    <option value="2nd Year Semester 1">2nd Year Semester 1</option>
+                    <option value="2nd Year Semester 2">2nd Year Semester 2</option>
+                    <option value="3rd Year Semester 1">3rd Year Semester 1</option>
+                    <option value="3rd Year Semester 2">3rd Year Semester 2</option>
+                    <option value="4th Year Semester 1">4th Year Semester 1</option>
+                    <option value="4th Year Semester 2">4th Year Semester 2</option>
+                    <option value="Optional">Optional Course</option>
+                </select>
+            </div>
+            <input type="number" name="start" id="start" value="0" hidden>
+            <div class="form-group">
+                <label for="lim">Results per page:</label>
+                <select name="lim" id="lim" th:default="10">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="recent">Filter by recently Added</label>
+                <input type="checkbox" name="recent" id="recent" value="true" >
+            </div>
+            <input type="submit" value="Search" class=" mt-1 btn  btn-primary btn-block"/>
         </form>
     </div>
 
@@ -32,32 +72,32 @@
                 <th class="column-header">Year Needed</th>
                 <th class="column-header">Price</th>
                 <th class="column-header">Image</th>
+                <th class="column-header">Buy Book</th>
             </tr>
-            <tr th:each="book,ittr:${books}" >
+            <tr th:each="book,ittr:${books}">
                 <td th:text="${book.getBookName()}"></td>
                 <td th:text="${book.getAuthor()}"></td>
-                <td >null</td>
+                <td>null</td>
                 <td th:text="${book.getYearNeed()}"></td>
                 <td th:text="|¥${book.getPrice()}|"></td>
                 <td class="table-row-cell">
                     <div class="align-content-center">
                         <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-50">
                     </div>
-<!--                    <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >-->
-<!--                        <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>-->
-<!--                        <input type="submit"value="Remove"/>-->
-<!--                    </form>-->
+                    <!--                    <form action="/books/delete" method="post" content="application/x-www-form-urlencoded" >-->
+                    <!--                        <input type="number" name="book_id" id="book_id" th:value="${book.getId()}" hidden>-->
+                    <!--                        <input type="submit"value="Remove"/>-->
+                    <!--                    </form>-->
                 </td>
                 <td>
                     <form action="/books/buy/confirm" method="post" content="application/x-www-form-urlencoded">
                         <input type="number" name="book_id" id="buy_book_id" th:value="${book.getId()}" hidden>
-                        <input type="submit" value="Buy"/>
+                        <input type="submit" value="Buy" class="btn btn-primary btn-block"/>
                     </form>
                 </td>
             </tr>
         </table>
     </div>
-
 
 
 </div>

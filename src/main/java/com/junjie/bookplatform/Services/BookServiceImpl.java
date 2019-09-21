@@ -8,6 +8,7 @@ import com.junjie.bookplatform.Model.Img;
 import com.junjie.bookplatform.Model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Service;
@@ -101,14 +102,10 @@ public class BookServiceImpl implements BookService {
     public Book getBookById(Long id) {
         return bookRepository.findById(id).get();
     }
+    
 
     @Override
-    public List<Book> getBooks() {
-        return bookRepository.findAll();
-    }
-
-    @Override
-    public List<Book> getAllBooksUserLoggedIn(User user) {
+    public List<Book> getAllBooksOwner(User user) {
         return bookRepository.findBooksByBookOwner(user);
     }
 

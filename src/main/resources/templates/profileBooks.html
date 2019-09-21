@@ -19,7 +19,24 @@
         <div>
             <h2 class="h2">My Books</h2>
         </div>
-        <div class="">
+        <div th:if="${myBooks.isEmpty()}" class="text-center">
+            <div class="m-5">
+                <h3 class="h3">No Books Listed</h3>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="flex-fill">
+                    <form action="/books/add">
+                        <button type="submit" class="btn btn-primary btn-block">Add Book</button>
+                    </form>
+                </div>
+                <div class="flex-fill">
+                    <form action="/profile">
+                        <button type="submit" class="btn btn-block btn-primary">Go Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="" th:if="!${myBooks.isEmpty()}">
             <table class="table table-bordered">
                 <tr class="bg-light">
                     <th class="column-header">Book Name</th>
@@ -62,41 +79,59 @@
                 </tr>
             </table>
         </div>
-
-
     </div>
     <!--    END OF IF   -->
 
     <!--    IF ITS THE BOOKS THE USER HAS BOUGHT    -->
     <div th:if="${boughtBooks}" class="container">
         <div>
-            <h2 class="h2">My Books</h2>
+            <h2 class="h2">My Bought Books</h2>
         </div>
-        <table class="table table-bordered">
-            <tr class="bg-light">
-                <th class="column-header">Book Name</th>
-                <th class="column-header">Book Author</th>
-                <th class="column-header">Major</th>
-                <th class="column-header">Year Needed</th>
-                <th class="column-header">Price</th>
-                <th class="column-header">Image</th>
-                <th class="column-header">Owner WeChat ID</th>
-            </tr>
-            <tr th:each="book,attr:${boughtBooks}">
-                <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
-                <td th:text="${book.getAuthor()}"></td>
-                <td>null</td>
-                <td th:text="${book.getYearNeed()}"></td>
-                <td th:text="|¥${book.getPrice()}|"></td>
-                <td>
-                    <div class="align-content-center">
-                        <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
-                             class="w-50">
-                    </div>
-                </td>
-                <td class="font-italic" th:text="${book.getBuyer().getWechat_id()}"></td>
-            </tr>
-        </table>
+        <div th:if="${boughtBooks.isEmpty()}" class="text-center">
+            <div class="m-5">
+                <h3 class="h3">No books bought</h3>
+            </div>
+            <div class="d-flex flex-row">
+
+                <div class="flex-fill">
+                    <form action="/books/">
+                        <button type="submit" class="btn btn-primary btn-block">Buy Books</button>
+                    </form>
+                </div>
+                <div class="flex-fill">
+                    <form action="/profile">
+                        <button type="submit" class="btn btn-block btn-primary">Go Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:if="!${boughtBooks.isEmpty()}">
+            <table class="table table-bordered">
+                <tr class="bg-light">
+                    <th class="column-header">Book Name</th>
+                    <th class="column-header">Book Author</th>
+                    <th class="column-header">Major</th>
+                    <th class="column-header">Year Needed</th>
+                    <th class="column-header">Price</th>
+                    <th class="column-header">Image</th>
+                    <th class="column-header">Owner WeChat ID</th>
+                </tr>
+                <tr th:each="book,attr:${boughtBooks}">
+                    <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
+                    <td th:text="${book.getAuthor()}"></td>
+                    <td>null</td>
+                    <td th:text="${book.getYearNeed()}"></td>
+                    <td th:text="|¥${book.getPrice()}|"></td>
+                    <td>
+                        <div class="align-content-center">
+                            <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
+                                 class="w-50">
+                        </div>
+                    </td>
+                    <td class="font-italic" th:text="${book.getBuyer().getWechat_id()}"></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <!--   END OF IF    -->
 
