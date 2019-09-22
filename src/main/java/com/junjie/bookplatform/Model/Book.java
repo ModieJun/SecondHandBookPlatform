@@ -53,6 +53,8 @@ public class Book {
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Date createdAt;
 
+    private Type type;
+
 
     /*
     ---------------Constructors------------------
@@ -62,11 +64,11 @@ public class Book {
 
     }
 
-    public Book(String name, String author, Double price) {
-
+    public Book(String name, String author, Double price,Type type) {
         this.bookName = name;
         this.author = author;
         this.price = price;
+        this.type= type;
     }
 
 
@@ -143,6 +145,15 @@ public class Book {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Book setType(Type type) {
+        this.type = type;
+        return this;
     }
 
     @Override

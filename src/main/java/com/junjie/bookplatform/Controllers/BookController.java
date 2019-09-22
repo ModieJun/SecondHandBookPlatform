@@ -48,6 +48,7 @@ public class BookController {
             User u = userService.getUser(principal.getName());
             model.addAttribute("books",filterService.getAllLoggedIn(u));
         }
+        model.addAttribute("start",0);
         return "books";
     }
 
@@ -135,6 +136,7 @@ public class BookController {
                     Long.valueOf(values.get("start")), Long.valueOf(values.get("lim"))));
 
         }
+        model.addAttribute("start",Long.valueOf(values.get("start")));
         return "books";
     }
 
