@@ -25,9 +25,7 @@ public enum Type {
         this.displayValue = displayValue;
     }
 
-
-    @Override
-    public String toString() {
-        return this.displayValue;
+    public String getDisplayValue() {
+        return displayValue;
     }
 }

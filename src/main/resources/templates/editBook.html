@@ -43,6 +43,15 @@
                     <option value="Optional">Optional Course</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="type">Book Type:</label>
+                <select name="type" id="type" class=" form-control">
+                    <option selected disabled>Choose Type</option>
+                    <option th:each="bookType : ${T(com.junjie.bookplatform.Model.Type).values()}"
+                            th:value="${bookType}"
+                            th:text="${bookType.getDisplayValue()}"></option>
+                </select>
+            </div>
             <!--         Needed for selecting major   <option value=""></option>-->
             <div class="form-group">
                 <label for="price" class="label">Price</label>

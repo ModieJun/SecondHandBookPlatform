@@ -41,7 +41,7 @@
                 <tr class="bg-light">
                     <th class="column-header">Book Name</th>
                     <th class="column-header">Book Author</th>
-                    <th class="column-header">Major</th>
+                    <th class="column-header">Type</th>
                     <th class="column-header">Year Needed</th>
                     <th class="column-header">Price</th>
                     <th class="column-header">Image</th>
@@ -51,7 +51,7 @@
                 <tr th:each="book,itr:${myBooks}">
                     <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
                     <td th:text="${book.getAuthor()}"></td>
-                    <td>null</td>
+                    <td th:text="${book.getType().getDisplayValue()}"></td>
                     <td th:text="${book.getYearNeed()}"></td>
                     <td th:text="|¥${book.getPrice()}|"></td>
                     <td>
@@ -110,7 +110,7 @@
                 <tr class="bg-light">
                     <th class="column-header">Book Name</th>
                     <th class="column-header">Book Author</th>
-                    <th class="column-header">Major</th>
+                    <th class="column-header">Type</th>
                     <th class="column-header">Year Needed</th>
                     <th class="column-header">Price</th>
                     <th class="column-header">Image</th>
@@ -119,7 +119,7 @@
                 <tr th:each="book,attr:${boughtBooks}">
                     <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
                     <td th:text="${book.getAuthor()}"></td>
-                    <td>null</td>
+                    <td th:text="${book.getType().getDisplayValue()}"></td>
                     <td th:text="${book.getYearNeed()}"></td>
                     <td th:text="|¥${book.getPrice()}|"></td>
                     <td>

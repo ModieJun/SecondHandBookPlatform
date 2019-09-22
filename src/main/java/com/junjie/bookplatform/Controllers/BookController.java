@@ -1,6 +1,7 @@
 package com.junjie.bookplatform.Controllers;
 
 import com.junjie.bookplatform.Model.Book;
+import com.junjie.bookplatform.Model.Type;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.FilterService;
@@ -42,13 +43,13 @@ public class BookController {
 
     @GetMapping("/")
     public String allBooks(Model model, Principal principal) {
-        if (principal==null) {
+        if (principal == null) {
             model.addAttribute("books", filterService.getAll());
         } else {
             User u = userService.getUser(principal.getName());
-            model.addAttribute("books",filterService.getAllLoggedIn(u));
+            model.addAttribute("books", filterService.getAllLoggedIn(u));
         }
-        model.addAttribute("start",0);
+        model.addAttribute("start", 0);
         return "books";
     }
 
@@ -59,9 +60,11 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file, @RequestParam("year_needed") String year_need) {
-        User u = userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        book.setYearNeed(year_need);
+    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file, Principal principal, HttpServletRequest request) {
+        User u = userService.getUser(principal.getName());
+//        book.setYearNeed(request.getParameter("year_needed"));
+        logger.warn("Type: " + Type.valueOf(request.getParameter("type")));
+//        book.setType(Type.valueOf(request.getParameter("type")));
         bookService.addBook(book, u, file);
         return "redirect:/";
     }
@@ -136,7 +139,7 @@ public class BookController {
                     Long.valueOf(values.get("start")), Long.valueOf(values.get("lim"))));
 
         }
-        model.addAttribute("start",Long.valueOf(values.get("start")));
+        model.addAttribute("start", Long.valueOf(values.get("start")));
         return "books";
     }
 

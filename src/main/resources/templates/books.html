@@ -47,7 +47,7 @@
                     <option value="Optional">Optional Course</option>
                 </select>
             </div>
-            <input type="number" name="start" id="start" value="0" hidden>
+            <input type="number" name="start" id="start" th:value="${start}" hidden>
             <div class="form-group">
                 <label for="lim">Results per page:</label>
                 <select name="lim" id="lim" th:default="10">
@@ -68,7 +68,7 @@
             <tr class="bg-light">
                 <th class="column-header">Book Name</th>
                 <th class="column-header">Book Author</th>
-                <th class="column-header">Major</th>
+                <th class="column-header">Type</th>
                 <th class="column-header">Year Needed</th>
                 <th class="column-header">Price</th>
                 <th class="column-header">Image</th>
@@ -77,7 +77,7 @@
             <tr th:each="book,ittr:${books}">
                 <td th:text="${book.getBookName()}"></td>
                 <td th:text="${book.getAuthor()}"></td>
-                <td>null</td>
+                <td th:text="${book.getType().toString()}"></td>
                 <td th:text="${book.getYearNeed()}"></td>
                 <td th:text="|¥${book.getPrice()}|"></td>
                 <td class="table-row-cell">
