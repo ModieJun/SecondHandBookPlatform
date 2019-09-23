@@ -20,6 +20,9 @@ public class User {
     @NotNull
     private String password;
 
+    @Column()
+    private String passwordConfirm;
+
     @OneToOne(cascade = CascadeType.ALL)
     private UserContact contact;
 
@@ -32,6 +35,14 @@ public class User {
         this.password = password;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public User setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+        return this;
+    }
 
     public Long getUser_Id() {
         return user_Id;

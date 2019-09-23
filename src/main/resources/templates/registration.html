@@ -15,19 +15,28 @@
                     <input th:field="*{username}" type="text" name="username" class="form-control"
                            id="username">
                 </label>
-                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Eror</p>
+                <div class="text text-danger">
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+                </div>
             </div>
+
             <div class="form-group">
                 <label for="password">Password
                     <input th:field="*{password}" type="password" name="password" class="form-control"
                            id="password">
                 </label>
-                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                <div class="text text-danger">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                </div>
             </div>
+
             <div class="form-group">
                 <label for="confirmPassword">Confirm password</label>
-                <input type="password" name="confirmPassword"
+                <input type="password" name="confirmPassword" th:field="*{passwordConfirm}"
                        id="confirmPassword" class="form-control">
+                <div class="text text-danger">
+                    <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">Password Not Same</p>
+                </div>
             </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block w-50">Register</button>
         </form>

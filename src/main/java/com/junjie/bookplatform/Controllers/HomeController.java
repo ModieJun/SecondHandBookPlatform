@@ -1,16 +1,17 @@
 package com.junjie.bookplatform.Controllers;
 
-import com.junjie.bookplatform.DB.BookRepository;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Security.SecurityService;
 import com.junjie.bookplatform.Services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.junjie.bookplatform.Validators.UserValidator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +23,12 @@ public class HomeController {
 
     private final UserServiceImpl userService;
     private final SecurityService securityService;
-    @Autowired
-    private BookRepository bookRepository;
+    private  final Validator uservalidator;
 
-    public HomeController(UserServiceImpl userService, SecurityService securityService) {
+    public HomeController(UserServiceImpl userService, SecurityService securityService,@Qualifier("userValidator") Validator userValidator) {
         this.userService = userService;
         this.securityService = securityService;
+        this.uservalidator = userValidator;
     }
 
 
@@ -56,7 +57,8 @@ public class HomeController {
     }
 
     @PostMapping(value = "/register")
-    public String registerUser(@Valid @ModelAttribute("newUser") User u, HttpServletRequest request, BindingResult result) {
+    public String registerUser(@ModelAttribute("newUser") User u, HttpServletRequest request, BindingResult result) {
+        this.uservalidator.validate(u,result);
         if (result.hasErrors()) {
             return "registration";
         }
