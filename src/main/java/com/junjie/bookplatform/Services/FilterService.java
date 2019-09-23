@@ -13,7 +13,7 @@ public interface FilterService {
 
     List<Book> getAllRecent();
 
-    List<Book> getAllFiltered(String book_name, String year_needed,String auth, Long start, Long lim);
+    List<Book> getAllFiltered(String book_name, String year_needed,String author,String type, Long start, Long lim);
 
 
 }

@@ -123,8 +123,10 @@ public class BookController {
     public String filter(Model model, HttpServletRequest req) {
         Map<String, String> values = new HashMap<>();
         values.put("book_name", req.getParameter("book_name"));
+        values.put("author", req.getParameter("author"));
         values.put("start", req.getParameter("start"));
         values.put("lim", req.getParameter("lim"));
+        values.put("type",req.getParameter("type"));
         values.put("recent", req.getParameter("recent"));
         values.put("year_needed", req.getParameter("year_needed"));
 
@@ -135,7 +137,7 @@ public class BookController {
             model.addAttribute("books", filterService.getAllRecent());
         } else {
             model.addAttribute("books", filterService.getAllFiltered(values.get("book_name"),
-                    values.get("year_needed"), values.get("author"),
+                    values.get("year_needed"), values.get("author"),values.get("type"),
                     Long.valueOf(values.get("start")), Long.valueOf(values.get("lim"))));
 
         }
