@@ -9,7 +9,7 @@
 <div class="container mt-4 border border-dark p-5">
     <div>
         <h2 class="h2">Confirmation</h2>
-        <table class="table-borderless">
+        <table class="table-borderless table">
             <tr >
                 <td>Name</td>
                 <td th:text="${confirmBook.getBookName()}"></td>
@@ -19,8 +19,8 @@
                 <td th:text="${confirmBook.getAuthor()}"></td>
             </tr>
             <tr>
-                <td>Major</td>
-                <td th:text="null"></td>
+                <td>Type</td>
+                <td th:text="${confirmBook.getType().getDisplayValue()}"></td>
             </tr>
             <tr>
                 <td>Year Needed</td>

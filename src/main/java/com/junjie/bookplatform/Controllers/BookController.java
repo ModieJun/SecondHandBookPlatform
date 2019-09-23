@@ -66,7 +66,7 @@ public class BookController {
         logger.warn("Type: " + Type.valueOf(request.getParameter("type")));
 //        book.setType(Type.valueOf(request.getParameter("type")));
         bookService.addBook(book, u, file);
-        return "redirect:/";
+        return "success";
     }
 
 

@@ -2,6 +2,7 @@ package com.junjie.bookplatform.Controllers;
 
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;
+import com.junjie.bookplatform.Model.UserContact;
 import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.UserService;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/profile")
@@ -28,6 +31,25 @@ public class ProfileController {
     public ProfileController(BookService bookService, UserService userService) {
         this.bookService = bookService;
         this.userService = userService;
+    }
+
+    /*
+        Add Contact Information
+     */
+
+    @GetMapping("/addcontact")
+    public String addContactPage(Model model,Principal principal) {
+        User u = userService.getUser(principal.getName());
+        model.addAttribute("user",u);
+        return "addContact";
+    }
+
+    @PostMapping("/addcontact")
+    public String addContact(HttpServletRequest request, Principal principal) {
+        String contact = request.getParameter("contact");
+        Long id = Long.valueOf(request.getParameter("user_id"));
+        userService.updateUserContact(id,new UserContact(contact));
+        return "redirect:/";
     }
 
     /*
@@ -49,13 +71,19 @@ public class ProfileController {
     }
 
     @PostMapping("/myBooks/edit/save")
-    public String saveEdit(@RequestParam("author") String author, @RequestParam("year_needed") String year_needed, @RequestParam("price") Double price,@RequestParam("bookName") String bookName,@RequestParam("book_id")Long id) {
-            logger.warn("Book Name:  "+ bookName );
+    public String saveEdit(HttpServletRequest request) {
+        Map<String,String> values = new HashMap<>();
+        values.put("bookName", request.getParameter("bookName"));
+        values.put("author", request.getParameter("author"));
+        values.put("type",request.getParameter("type"));
+        values.put("year_needed", request.getParameter("year_needed"));
+        values.put("price",request.getParameter("price"));
+        Long id = Long.valueOf(request.getParameter("book_id"));
+
+        logger.warn("Year_needed: " + values.get("year_needed"));
+        logger.warn("Book Name:  "+ values.get("book_name"));
         Book b = bookService.getBookById(id);
-        b.setBookName(bookName).setAuthor(author).setPrice(price).setYearNeed(year_needed);
-            logger.warn("ID: " + b.getId() +"Param: " + bookName + " Author :" + author +
-                " year_needed: " + year_needed + " Price : " + price);
-        bookService.updateBook(b);
+        bookService.updateBook(b,values);
         return "redirect:/profile/myBooks";
     }
 

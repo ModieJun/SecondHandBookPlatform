@@ -5,13 +5,14 @@ import com.junjie.bookplatform.Model.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookService {
     boolean addBook(Book book, User u, MultipartFile f);
 
     boolean deleteBook(Book book);
 
-    Book updateBook(Book book);
+    Book updateBook(Book book, Map<String,String> values);
 
     Book getBook(String book_name);
 

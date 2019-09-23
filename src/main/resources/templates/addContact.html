@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c)-- Created By JUNJIE Lin -> On 2019/9/23
+  -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Contact</title>
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+</head>
+<body>
+<div>
+    <a href="/">Home</a>
+</div>
+<div class="container">
+    <h2>Add Contact</h2>
+    <form action="/profile/addcontact" method="post" id="addcontact">
+        <div class="form-group">
+            <label for="contact" class="label">How to contact me</label>
+            <textarea form="addcontact" name="contact" id="contact" cols="30" rows="10" maxlength="100" required minlength="10" class="form-control"></textarea>
+        </div>
+        <input type="number"  name="user_id" th:value="${user.getUser_Id()}" hidden>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+</div>
+</body>
+</html>

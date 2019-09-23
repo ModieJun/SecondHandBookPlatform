@@ -5,10 +5,10 @@ import com.junjie.bookplatform.DB.BookRepository;
 import com.junjie.bookplatform.DB.UserRepository;
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.Img;
+import com.junjie.bookplatform.Model.Type;
 import com.junjie.bookplatform.Model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -69,7 +70,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Book book) {
+    public Book updateBook(Book book, Map<String,String> values) {
+        Type t;
+        String type = values.get("type");
+        if (type != null && !type.equals("")) {
+            t = Type.valueOf(type);
+            book.setType(t);
+        }
+
+        book.setBookName(values.get("bookName"))
+                .setAuthor(values.get("author")).setPrice(Double.valueOf(values.get("price")))
+                .setYearNeed(values.get("year_needed"));
         bookRepository.save(book);
         return book;
     }

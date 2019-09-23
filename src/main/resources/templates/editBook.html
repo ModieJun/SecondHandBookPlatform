@@ -15,8 +15,8 @@
     <div>
         <form action="/profile/myBooks/edit/save" th:object="${editBook}" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="book_name" class="label">Book Name:</label>
-                <input type="text" name="bookName" id="book_name" class="form-control" th:field="*{bookName}"
+                <label for="bookName" class="label">Book Name:</label>
+                <input type="text" name="bookName" id="bookName" class="form-control" th:field="*{bookName}"
                        required
                        th:placeholder="*{getBookName()}">
             </div>

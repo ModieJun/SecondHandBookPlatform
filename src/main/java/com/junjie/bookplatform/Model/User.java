@@ -2,9 +2,8 @@ package com.junjie.bookplatform.Model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "User")
 @Table(name = "user")
@@ -15,25 +14,20 @@ public class User {
     private Long user_Id;
 
     @NotNull
-    @Column(unique = true)
+    @Column(unique = true, length = 15)
     private String username;
 
     @NotNull
     private String password;
 
-    @Column(unique = true)
-    private String wechat_id;
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserContact contact;
 
 
     public User() {
     }
 
-    public User(@NotNull String username, @NotNull String password, String wechat_id) {
-        this.username = username;
-        this.password = password;
-        this.wechat_id = wechat_id;
-    }
-    public User(String username, String password) {
+    public User(@NotNull String username, @NotNull String password) {
         this.username = username;
         this.password = password;
     }
@@ -47,24 +41,26 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public User setPassword(String password) {
+        this.password = password;return this;
     }
 
-    public String getWechat_id() {
-        return wechat_id;
+    public UserContact getContact() {
+        return contact;
     }
 
-    public void setWechat_id(String wechat_id) {
-        this.wechat_id = wechat_id;
+    public User setContact(UserContact contact) {
+        this.contact = contact;
+        return this;
     }
 
     @Override
@@ -73,7 +69,7 @@ public class User {
                 "user_Id=" + user_Id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", wechat_id='" + wechat_id + '\'' +
+                ", contact=" + contact +
                 '}';
     }
 }

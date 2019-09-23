@@ -10,9 +10,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller
@@ -54,11 +56,15 @@ public class HomeController {
     }
 
     @PostMapping(value = "/register")
-    public String registerUser(@ModelAttribute("newUser") User u, HttpServletRequest request) {
+    public String registerUser(@Valid @ModelAttribute("newUser") User u, HttpServletRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
+
         if (userService.addUser(u)) {
             //autoLogin
             securityService.autoLogin(u.getUsername(), u.getPassword(), request);
-            return "redirect:/";
+            return "redirect:/profile/addcontact";
         }
         return "registration";
     }

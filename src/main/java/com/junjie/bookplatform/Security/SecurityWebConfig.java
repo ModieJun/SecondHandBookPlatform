@@ -50,9 +50,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     /*
     TODO :
         Still need to Add User authentication for adding and deleting Books
-          2.  Add filters
           3. Add Form Validators
-          3.  Add Department Entity
 //        1.  Need to implement buy Book
 
 
@@ -62,7 +60,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().antMatchers("/resources/**","/public/**", "/h2-console/**", "/console/**").permitAll()
                 .and()
-                    .authorizeRequests().antMatchers("/","/register","/books/","/books/image/**").permitAll()
+                    .authorizeRequests().antMatchers("/","/register","/books/","/books/image/**","/books/search/**").permitAll()
                 .and()
                     .authorizeRequests().antMatchers("/books/add", "/books/remove","/profile/**").access("hasRole('ROLE_USER')")
                     .anyRequest().authenticated()
