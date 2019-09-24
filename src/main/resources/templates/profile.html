@@ -19,18 +19,18 @@
         </ul>
     </div>
     <!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a  href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="container">
-    <div class="container text-center">
-        <h1 class="h1">Second Hand Book Platform</h1>
-        <a href="/books/" class="hyperlink">Get all Books</a>
-        <a href="/books/add" class="hyperlink">Add Book</a>
-    </div>
-
     <div class="container d-flex flex-column">
         <div class="flex-fill text-center">
             <a href="/profile/myBooks">My Books</a>
@@ -44,7 +44,7 @@
     <div class="container m-5">
         <div>
             <form action="/logout" method="get" class="form-group">
-                <button type="submit" class=" btn btn-lg btn-block btn-primary">Logout</button>
+                <button type="submit" class="btn btn-lg btn-danger ">Logout</button>
             </form>
         </div>
         <div class="mt-4">

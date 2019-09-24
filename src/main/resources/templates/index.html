@@ -5,7 +5,7 @@
     <title>Second Hand Book Platform</title>
     <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
 </head>
-<body>
+<body style="height: 100%;width: 100%">
 <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <a href="" class="navbar-brand">Second Hand Book Platform</a>
     <div class="collapse navbar-collapse ml-3" id="navbarNav">
@@ -18,15 +18,43 @@
             </li>
         </ul>
     </div>
-<!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <!--   Reusable for other pages -->
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a  href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container-fluid h-25" id="landingImage">
+
+</div>
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <form action="/books/add">
+                <button type="submit" class="btn btn-block btn-light btn-outline-primary p-5"><span class="h3">List a book</span></button>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/books/">
+                <button type="submit" class="btn btn-block btn-light btn-outline-primary p-5"><span class="h3">Buy Book</span></button>
+            </form>
+        </div>
     </div>
 </div>
 
-<div class="container center">
-
+<div id="recentlyAdded" class="container-fluid m-4 ">
+    <div class="container p-2">
+        <h2 class="h2">Recently Added</h2>
+    </div>
+    <div class="container-fluid">
+            <p>books</p>
+    </div>
 </div>
 </body>
 </html>

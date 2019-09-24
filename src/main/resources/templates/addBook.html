@@ -19,27 +19,33 @@
         </ul>
     </div>
     <!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="container">
-    <div class="text-center">
-        <h2 class="h2">Add New Book</h2>
-    </div>
-    <div>
-        <form action="/books/add" th:object="${newBook}" method="post" enctype="multipart/form-data">
+    <div class="mt-4">
+        <form action="/books/add" th:object="${newBook}" method="post" enctype="multipart/form-data" class="text-left p-5 border-light border shadow-lg">
+            <h2 class="h2">Add New Book</h2>
             <div class="form-group">
                 <label for="bookName" class="label">Book Name:</label>
                 <input type="text" name="bookName" id="bookName" class="form-control" th:field="*{bookName}" required>
-                <p th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="text text-danger">Book name needed</p>
+                <p th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="text text-danger">Book name
+                    needed</p>
             </div>
             <div class="form-group">
                 <label for="author" class="label">Author:</label>
                 <input type="text" name="author" id="author"
                        class="form-control" th:field="*{author}" required>
-                <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text text-danger">Author Needed</p>
+                <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text text-danger">Author
+                    Needed</p>
             </div>
 
             <div class="form-group">

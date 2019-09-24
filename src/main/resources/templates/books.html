@@ -22,9 +22,15 @@
         </ul>
     </div>
     <!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a  href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
     </div>
 </div>
 <div>

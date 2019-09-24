@@ -90,4 +90,9 @@ public class HomeController {
     public String profile() {
         return "profile";
     }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "search";
+    }
 }

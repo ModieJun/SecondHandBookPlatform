@@ -19,12 +19,18 @@
         </ul>
     </div>
     <!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a  href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
     </div>
 </div>
-<div class="container mt-4 border border-dark p-5">
+<div class="container mt-5 border border-light shadow-lg p-5">
     <div>
         <h2 class="h2">Confirmation</h2>
         <table class="table-borderless table">

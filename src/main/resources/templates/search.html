@@ -1,18 +1,17 @@
 <!--
-  ~ Copyright (c)-- Created By JUNJIE Lin -> On 2019/9/23
+  ~ Copyright (c)-- Created By JUNJIE Lin -> On 2019/9/24
   -->
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Add Contact</title>
-    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+    <title>Search</title>
+    <link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
+
 </head>
 <body>
-<div>
-    <a href="/">Home</a>
-</div>
+<!--NAV-->
 <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <a href="" class="navbar-brand">Second Hand Book Platform</a>
     <div class="collapse navbar-collapse ml-3" id="navbarNav">
@@ -29,24 +28,24 @@
     <div class="mr-5  font-weight-normal">
         <ul class="navbar-nav">
             <li sec:authorize="!isFullyAuthenticated()">
-                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
             <li sec:authorize="isFullyAuthenticated()">
-                <a  href="/profile" class="nav-link nav-item">Profile</a>
+                <a href="/profile" class="nav-link nav-item">Profile</a>
             </li>
         </ul>
     </div>
 </div>
-<div class="container">
-    <h2>Add Contact</h2>
-    <form action="/profile/addcontact" method="post" id="addcontact">
-        <div class="form-group">
-            <label for="contact" class="label">How to contact me</label>
-            <textarea form="addcontact" name="contact" id="contact" cols="30" rows="10" maxlength="100" required minlength="10" class="form-control"></textarea>
+<div class="container mt-5">
+    <form action="/books/search" class="p-5  text-center shadow-lg">
+        <h2 class="h2 mb-5">Search</h2>
+        <div class="form-group m-auto">
+            <input type="search" name="query" id="query" placeholder="Search" class="text-field w-50 p-2">
+            <button type="submit" class="btn btn-outline-info btn-light">Search</button>
         </div>
-        <input type="number"  name="user_id" th:value="${user.getUser_Id()}" hidden>
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </form>
 </div>
+
+
 </body>
 </html>

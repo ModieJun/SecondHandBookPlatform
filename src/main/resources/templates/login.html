@@ -20,36 +20,45 @@
         </ul>
     </div>
     <!--   Reusable for other pages -->
-    <div class="mr-5 nav-link font-weight-normal">
-        <a sec:authorize="!isFullyAuthenticated()" href="/login" >Login/Register</a>
-        <a sec:authorize="isFullyAuthenticated()" href="/profile">Profile</a>
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
     </div>
 </div>
 
-<div class="container">
-    <h2 class="h2">Log in</h2>
-    <form action="/login" method="post" >
-        <div class="form-group">
-            <label for="username" class="">
-                Username
-                <input type="text" name="username" id="username" class="form-control ">
-            </label>
+<div class="container mt-5">
+    <div class="shadow-lg p-5">
+        <form action="/login" method="post" class="text-center border border-light ">
+            <h2 class="h2 mb-3">Log in</h2>
+            <!--            username    -->
+            <div class="form-group" >
+                <label for="username" >
+                    Username
+                </label>
+                <input type="text" name="username" id="username" class="form-control text-field w-50 m-auto">
+            </div>
+            <!--            Password-->
+            <div class="form-group  ">
+                <label for="password" class="label">
+                    Password
+                </label>
+                <input type="password" name="password" id="password" class="form-control password-field w-50 m-auto">
+            </div>
+            <p th:if="${param.error}" class="text text-danger">Username or Password Invalid</p>
+            <br>
+            <button class="btn btn-success btn-block my-4 w-50 m-auto p-2" type="submit">Log In</button>
+        </form>
+        <br>
+        <div class="m-auto text-center">
+            <a href="/register" class="hyperlink w-25 ">Register</a>
         </div>
-        <br>
-        <div class="form-group">
-            <label for="password">
-                Password
-            </label><input type="password" name="password" id="password" class="form-control ">
-        </div>
-        <p th:if="${param.error}"  class="text text-danger">Username or Password Invalid</p>
-        <br>
-        <br>
-        <button class="btn btn-lg btn-primary btn-block w-50" type="submit">Log In</button>
-    </form>
-    <br>
-    <form action="/register" method="get">
-        <button class="btn btn-primary btn-lg btn-block w-25 ">Register</button>
-    </form>
+    </div>
 </div>
 
 
