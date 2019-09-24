@@ -38,15 +38,12 @@ public class UserServiceImpl  implements UserService{
      *      Password should be In Plain text
      * @return
      *      {True, False}
-     * if the User has been saved Succesfully
+     * if the User has been saved Successfully
      */
     @Override
     public boolean addUser(User user) {
-        User u= this.getUser(user.getUsername());
-        if (u != null) {
-            return false;
-        }
-        user.setPassword(encoder.encode(user.getPassword()));
+        String pw = encoder.encode(user.getPassword());
+        user.setPassword(pw).setPasswordConfirm(null);
         logger.warn("PW" + user.getPassword());
         userRepository.save(user);
         return true;
@@ -54,7 +51,6 @@ public class UserServiceImpl  implements UserService{
 
     @Override
     public void removeUser(User user) {
-        //!!!!!!!!!!before removing user need to remove the books first . Hard code
         userRepository.delete(user);
     }
 

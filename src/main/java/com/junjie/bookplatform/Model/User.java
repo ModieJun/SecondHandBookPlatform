@@ -4,6 +4,7 @@ package com.junjie.bookplatform.Model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Entity(name = "User")
 @Table(name = "user")
@@ -20,7 +21,8 @@ public class User {
     @NotNull
     private String password;
 
-    @Column()
+//    PasswordConfirm only USed for validation and Not stored
+    @Null
     private String passwordConfirm;
 
     @OneToOne(cascade = CascadeType.ALL)

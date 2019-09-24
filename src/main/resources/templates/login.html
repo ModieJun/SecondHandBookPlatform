@@ -11,24 +11,27 @@
     <a href="/" class="hyperlink">Home</a>
 </div>
 <div class="container">
-    <form action="/login" method="post" class="form-group">
-        <h2 class="h2">Log in</h2>
-        <div class=" center flex-column">
+    <h2 class="h2">Log in</h2>
+    <form action="/login" method="post" >
+        <div class="form-group">
             <label for="username" class="">
                 Username
                 <input type="text" name="username" id="username" class="form-control ">
             </label>
-            <br>
+        </div>
+        <br>
+        <div class="form-group">
             <label for="password">
                 Password
-            </label><input type="password" name="password" id="password" class="form-control w-50">
-            <br>
-            <br>
-            <button class="btn btn-lg btn-primary btn-block w-50"  type="submit">Log In</button>
+            </label><input type="password" name="password" id="password" class="form-control ">
         </div>
+        <p th:if="${param.error}"  class="text text-danger">Username or Password Invalid</p>
+        <br>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block w-50" type="submit">Log In</button>
     </form>
     <br>
-    <form action="/register"method="get">
+    <form action="/register" method="get">
         <button class="btn btn-primary btn-lg btn-block w-25 ">Register</button>
     </form>
 </div>
