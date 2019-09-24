@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public boolean addBook(Book book, User u, MultipartFile f) {
-        if (f != null) {
+        if (f != null && !f.isEmpty()) {
             String imgName = StringUtils.cleanPath(f.getOriginalFilename());
             try {
                 if (imgName.contains("..")) {

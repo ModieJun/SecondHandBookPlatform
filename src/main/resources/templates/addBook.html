@@ -14,18 +14,20 @@
     <div>
         <form action="/books/add" th:object="${newBook}" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="book_name" class="label">Book Name:</label>
-                <input type="text" name="book_name" id="book_name" class="form-control" th:field="*{bookName}" required>
+                <label for="bookName" class="label">Book Name:</label>
+                <input type="text" name="bookName" id="bookName" class="form-control" th:field="*{bookName}" required>
+                <p th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="text text-danger">Book name needed</p>
             </div>
             <div class="form-group">
-                <label for="author" class="label">Author:</label><input type="text" name="author" id="author"
-                                                                        class="form-control" th:field="*{author}"
-                                                                        required>
+                <label for="author" class="label">Author:</label>
+                <input type="text" name="author" id="author"
+                       class="form-control" th:field="*{author}" required>
+                <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text text-danger">Author Needed</p>
             </div>
 
             <div class="form-group">
                 <label for="year" class="label">Year Needed:</label>
-                <select name="yearNeed" id="year"
+                <select name="yearNeed" id="year" required
                         class=" form-control">
                     <option selected disabled="disabled">Choose Year</option>
                     <option value="1st Year Semester 1">1st Year Semester 1</option>
@@ -38,15 +40,17 @@
                     <option value="4th Year Semester 2">4th Year Semester 2</option>
                     <option value="Optional">Optional Course</option>
                 </select>
+                <p th:if="${#fields.hasErrors('yearNeed')}" th:errors="*{yearNeed}" class="text text-danger"></p>
             </div>
             <div class="form-group">
                 <label for="type">Book Type:</label>
-                <select name="type" id="type" class=" form-control">
+                <select name="type" id="type" class=" form-control" required>
                     <option selected disabled>Choose Type</option>
                     <option th:each="bookType : ${T(com.junjie.bookplatform.Model.Type).values()}"
                             th:value="${bookType}"
                             th:text="${bookType.getDisplayValue()}"></option>
                 </select>
+                <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="text text-danger"></p>
             </div>
             <!--         Needed for selecting major   <option value=""></option>-->
             <div class="form-group">

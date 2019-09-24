@@ -6,13 +6,17 @@ import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.FilterService;
 import com.junjie.bookplatform.Services.UserService;
+import com.junjie.bookplatform.Validators.BookValidator;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +42,9 @@ public class BookController {
     private UserService userService;
     @Autowired
     private FilterService filterService;
+    @Autowired
+    @Qualifier("bookValidator")
+    private Validator validator;
 
     private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
@@ -60,7 +67,11 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file, Principal principal, HttpServletRequest request) {
+    public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file, Principal principal, HttpServletRequest request, BindingResult result) {
+        validator.validate(book,result);
+        if (result.hasErrors()) {
+            return "addBook";
+        }
         User u = userService.getUser(principal.getName());
 //        book.setYearNeed(request.getParameter("year_needed"));
         logger.warn("Type: " + Type.valueOf(request.getParameter("type")));
