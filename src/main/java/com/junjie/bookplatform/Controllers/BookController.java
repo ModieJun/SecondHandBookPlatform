@@ -56,7 +56,6 @@ public class BookController {
             User u = userService.getUser(principal.getName());
             model.addAttribute("books", filterService.getAllLoggedIn(u));
         }
-        model.addAttribute("start", 0);
         return "books";
     }
 
@@ -68,7 +67,7 @@ public class BookController {
 
     @PostMapping("/add")
     public String addBook(@ModelAttribute("newBook") Book book, @RequestParam("imgFile") MultipartFile file, Principal principal, HttpServletRequest request, BindingResult result) {
-        validator.validate(book,result);
+        validator.validate(book, result);
         if (result.hasErrors()) {
             return "addBook";
         }
@@ -130,14 +129,20 @@ public class BookController {
     /*
       -------------Filter Mappings-------------
      */
-    @GetMapping("/search")
-    public String filter(Model model, HttpServletRequest req) {
+    @GetMapping("/advance")
+    public String searchPage(Model model) {
+        model.addAttribute("start", 0);
+        return "advSearch";
+    }
+
+    @GetMapping("/search/advance")
+    public String searchAdvance(Model model, HttpServletRequest req) {
         Map<String, String> values = new HashMap<>();
         values.put("book_name", req.getParameter("book_name"));
         values.put("author", req.getParameter("author"));
         values.put("start", req.getParameter("start"));
         values.put("lim", req.getParameter("lim"));
-        values.put("type",req.getParameter("type"));
+        values.put("type", req.getParameter("type"));
         values.put("recent", req.getParameter("recent"));
         values.put("year_needed", req.getParameter("year_needed"));
 
@@ -148,11 +153,23 @@ public class BookController {
             model.addAttribute("books", filterService.getAllRecent());
         } else {
             model.addAttribute("books", filterService.getAllFiltered(values.get("book_name"),
-                    values.get("year_needed"), values.get("author"),values.get("type"),
+                    values.get("year_needed"), values.get("author"), values.get("type"),
                     Long.valueOf(values.get("start")), Long.valueOf(values.get("lim"))));
 
         }
         model.addAttribute("start", Long.valueOf(values.get("start")));
+        return "books";
+    }
+
+    @GetMapping("/search")
+    public String search(HttpServletRequest request, Model model, Principal principal) {
+        String query = request.getParameter("query");
+        if (principal == null) {
+            model.addAttribute("books", filterService.getByQueryVal(query,null));
+        }else{
+            User u = userService.getUser(principal.getName());
+            model.addAttribute("books",filterService.getByQueryVal(query,u));
+        }
         return "books";
     }
 

@@ -8,6 +8,7 @@ import com.junjie.bookplatform.Model.User;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +53,10 @@ public class FilterServiceImpl implements FilterService {
         }
 
         return bookRepository.getAll(bn, year_needed, auth, t, PageRequest.of(start.intValue(), lim.intValue()));
+    }
+
+    @Override
+    public List<Book> getByQueryVal(String query,@Nullable User u) {
+        return bookRepository.getAllByBookNameContainingOrAuthorContainingAndBookOwnerNot(query,query,u);
     }
 }

@@ -1,0 +1,96 @@
+<!--
+  ~ Copyright (c)-- Created By JUNJIE Lin -> On 2019/9/24
+  -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<!--NAV-->
+<div class="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <a href="" class="navbar-brand">Second Hand Book Platform</a>
+    <div class="collapse navbar-collapse ml-3" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/books/">Books</a>
+            </li>
+        </ul>
+    </div>
+    <!--   Reusable for other pages -->
+    <div class="mr-5  font-weight-normal">
+        <ul class="navbar-nav">
+            <li sec:authorize="!isFullyAuthenticated()">
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
+            </li>
+            <li sec:authorize="isFullyAuthenticated()">
+                <a href="/profile" class="nav-link nav-item">Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container  p-5 mt-5 shadow-lg">
+    <form th:action="@{/books/search/advance}" method="get" class=" text-left">
+        <h2 class="text-center">Search</h2>
+        <div class="form-group">
+            <label for="book_name">Book Name</label>
+            <input class="form-control" type="text" name="book_name"
+                   id="book_name"
+            >
+        </div>
+        <div class="form-group">
+            <label for="author"> Book Author</label>
+            <input type="text" class="form-control" name="author"
+                   id="author">
+        </div>
+        <div class="form-group">
+            <label for="year" class="label">Year Needed:</label>
+            <select name="year_needed" id="year" th:default="${null}"
+                    class="dropdown ">
+                <option selected disabled="disabled">Choose Year</option>
+                <option value="1st Year Semester 1">1st Year Semester 1</option>
+                <option value="1st Year Semester 2">1st Year Semester 2</option>
+                <option value="2nd Year Semester 1">2nd Year Semester 1</option>
+                <option value="2nd Year Semester 2">2nd Year Semester 2</option>
+                <option value="3rd Year Semester 1">3rd Year Semester 1</option>
+                <option value="3rd Year Semester 2">3rd Year Semester 2</option>
+                <option value="4th Year Semester 1">4th Year Semester 1</option>
+                <option value="4th Year Semester 2">4th Year Semester 2</option>
+                <option value="Optional">Optional Course</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="type">Book Type:</label>
+            <select name="type" id="type" class=" form-control">
+                <option selected></option>
+                <option th:each="bookType : ${T(com.junjie.bookplatform.Model.Type).values()}"
+                        th:value="${bookType}"
+                        th:text="${bookType.getDisplayValue()}"></option>
+            </select>
+        </div>
+        <input type="number" name="start" id="start" th:value="${start}" hidden>
+        <div class="form-group">
+            <label for="lim">Results per page:</label>
+            <select name="lim" id="lim" th:default="10">
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="recent">Filter by recently Added</label>
+            <input type="checkbox" name="recent" id="recent" value="true">
+        </div>
+        <input type="submit" value="Search" class="btn btn-outline-info btn-light btn-block"/>
+    </form>
+</div>
+
+
+</body>
+</html>

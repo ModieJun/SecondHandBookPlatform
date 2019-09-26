@@ -25,69 +25,25 @@
     <div class="mr-5  font-weight-normal">
         <ul class="navbar-nav">
             <li sec:authorize="!isFullyAuthenticated()">
-                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
             <li sec:authorize="isFullyAuthenticated()">
-                <a  href="/profile" class="nav-link nav-item">Profile</a>
+                <a href="/profile" class="nav-link nav-item">Profile</a>
             </li>
         </ul>
     </div>
 </div>
+<div class="container mt-3  p-5 shadow-lg">
+    <form action="/books/search" class="text-center">
+        <h2 class="h2 mb-5 ">Search</h2>
+        <div class="form-group m-auto ">
+            <input type="search" name="query" id="query" placeholder="Search" class="text-field w-50 p-2">
+            <button type="submit" class="btn btn-outline-info btn-light">Search</button>
+        </div>
+    </form>
+    <a href="/books/advance" class="hyperlink text-left ml-5">Advance Search</a>
+</div>
 <div>
-    <div class="container text-center">
-        <h2>Search</h2>
-        <form th:action="@{/books/search}" method="get" class="form-group w-75">
-            <div class="form-group">
-                <label for="book_name">Book Name</label>
-                <input class="form-control" type="text" name="book_name"
-                       id="book_name"
-                      >
-            </div>
-            <div class="form-group">
-                <label for="author"> Book Author</label>
-                <input type="text" class="form-control" name="author"
-                       id="author">
-            </div>
-            <div class="form-group">
-                <label for="year" class="label">Year Needed:</label>
-                <select name="year_needed" id="year" th:default="${null}"
-                        class="dropdown ">
-                    <option selected disabled="disabled">Choose Year</option>
-                    <option value="1st Year Semester 1">1st Year Semester 1</option>
-                    <option value="1st Year Semester 2">1st Year Semester 2</option>
-                    <option value="2nd Year Semester 1">2nd Year Semester 1</option>
-                    <option value="2nd Year Semester 2">2nd Year Semester 2</option>
-                    <option value="3rd Year Semester 1">3rd Year Semester 1</option>
-                    <option value="3rd Year Semester 2">3rd Year Semester 2</option>
-                    <option value="4th Year Semester 1">4th Year Semester 1</option>
-                    <option value="4th Year Semester 2">4th Year Semester 2</option>
-                    <option value="Optional">Optional Course</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="type">Book Type:</label>
-                <select name="type" id="type" class=" form-control">
-                    <option selected></option>
-                    <option th:each="bookType : ${T(com.junjie.bookplatform.Model.Type).values()}"
-                            th:value="${bookType}"
-                            th:text="${bookType.getDisplayValue()}"></option>
-                </select>
-            </div>
-            <input type="number" name="start" id="start" th:value="${start}" hidden>
-            <div class="form-group">
-                <label for="lim">Results per page:</label>
-                <select name="lim" id="lim" th:default="10">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="recent">Filter by recently Added</label>
-                <input type="checkbox" name="recent" id="recent" value="true" >
-            </div>
-            <input type="submit" value="Search" class=" mt-1 btn  btn-primary btn-block"/>
-        </form>
-    </div>
 
     <div id="resultTbl" class="mt-5 container">
         <table class="table table-bordered ">
