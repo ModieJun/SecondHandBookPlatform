@@ -5,10 +5,10 @@ import com.junjie.bookplatform.Model.Type;
 import com.junjie.bookplatform.Model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,5 +39,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                       @Param("auth")String author, @Param("t") Type t, Pageable pageable);
 
     List<Book> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    @Query("select b from Book b where(b.bookName like CONCAT('%',:bn,'%')) or (b.author like concat('%',:au,'%')) " +
+            "and (:u is null or b.bookOwner<>:u)")
+    List<Book> getAllByBookNameContainingOrAuthorContainingAndBookOwnerNot(@Param("bn")String bookName,@Param("au") String author, @Param("u")  User u);
 
 }

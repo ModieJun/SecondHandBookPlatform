@@ -22,38 +22,62 @@
     <div class="mr-5  font-weight-normal">
         <ul class="navbar-nav">
             <li sec:authorize="!isFullyAuthenticated()">
-                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
             <li sec:authorize="isFullyAuthenticated()">
-                <a  href="/profile" class="nav-link nav-item">Profile</a>
+                <a href="/profile" class="nav-link nav-item">Profile</a>
             </li>
         </ul>
     </div>
 </div>
-<div class="container-fluid h-25" id="landingImage">
-
-</div>
+<!--<div  id="landingImage">-->
+<!--    <img th:src="@{public/images/cover.jpg}" alt="Book Shelf"  >-->
+<!--</div>-->
 <div class="container mt-5">
     <div class="row align-items-center">
         <div class="col">
-            <form action="/books/add">
-                <button type="submit" class="btn btn-block btn-light btn-outline-primary p-5"><span class="h3">List a book</span></button>
-            </form>
+            <a href="/books/add" class="btn btn-block btn-light btn-outline-primary p-5"><span
+                    class="h3">List a Book</span></a>
         </div>
         <div class="col">
-            <form action="/books/">
-                <button type="submit" class="btn btn-block btn-light btn-outline-primary p-5"><span class="h3">Buy Book</span></button>
-            </form>
+            <a href="/books/" class="btn btn-block btn-light btn-outline-primary p-5"><span
+                    class="h3">Buy Book</span></a>
         </div>
     </div>
 </div>
 
-<div id="recentlyAdded" class="container-fluid m-4 ">
-    <div class="container p-2">
+<div id="recentlyAdded" class="container-fluid mt-5 shadow-lg">
+    <div class="container p-5   ">
         <h2 class="h2">Recently Added</h2>
     </div>
-    <div class="container-fluid">
-            <p>books</p>
+    <div class="container">
+        <div class="ml-2 mr-2">
+            <div class="row border border-dark p-4" th:each="book,ittr:${recentBooks}">
+                <div class="col-4">
+                    <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-75">
+                </div>
+                <div class="row col-xl">
+                    <div class=" col-sm col">
+                        <h6 class="h6 col-sm" th:text="${book.getBookName()}">Title</h6>
+                        <h6 class="h6 col-sm" th:text="${book.getAuthor()}">Author</h6>
+                        <h6 class="h6 col-sm" th:text="${book.getType().getDisplayValue()}">Type</h6>
+                        <h6 class="h6 col-sm" th:text="${book.getYearNeed()}">Year</h6>
+                    </div>
+                    <div class="col-xl col text-right container">
+                        <div class="col-sm">
+                            <h4 class="h4 " th:text="|¥${book.getPrice()}|">Price</h4>
+                        </div>
+                        <div class="row">
+                            <form action="/books/buy/confirm" method="post" class="col-sm align-self-end"
+                                  content="application/x-www-form-urlencoded">
+                                <input type="number" name="book_id" id="buy_book_id" th:value="${book.getId()}" hidden>
+                                <input type="submit" value="Buy" class="btn btn-primary "/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

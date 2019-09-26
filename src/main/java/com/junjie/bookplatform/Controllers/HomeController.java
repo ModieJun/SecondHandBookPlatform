@@ -2,8 +2,9 @@ package com.junjie.bookplatform.Controllers;
 
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Security.SecurityService;
+import com.junjie.bookplatform.Services.BookService;
+import com.junjie.bookplatform.Services.FilterService;
 import com.junjie.bookplatform.Services.UserServiceImpl;
-import com.junjie.bookplatform.Validators.UserValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -26,16 +26,19 @@ public class HomeController {
     private final UserServiceImpl userService;
     private final SecurityService securityService;
     private final Validator uservalidator;
+    private final FilterService filterService;
 
-    public HomeController(UserServiceImpl userService, SecurityService securityService, @Qualifier("userValidator") Validator userValidator) {
+    public HomeController(UserServiceImpl userService, SecurityService securityService, @Qualifier("userValidator") Validator userValidator, FilterService filterService) {
         this.userService = userService;
         this.securityService = securityService;
         this.uservalidator = userValidator;
+        this.filterService = filterService;
     }
 
 
     @RequestMapping(value = {"/"})
-    public String Home() {
+    public String Home(Model model) {
+        model.addAttribute("recentBooks",filterService.getAllRecent() );
         return "index";
     }
 
@@ -91,8 +94,4 @@ public class HomeController {
         return "profile";
     }
 
-    @GetMapping("/search")
-    public String searchPage() {
-        return "search";
-    }
 }
