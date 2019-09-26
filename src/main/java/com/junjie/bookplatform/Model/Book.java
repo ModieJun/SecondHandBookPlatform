@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Arrays;
 
 @Entity
@@ -50,6 +50,7 @@ public class Book {
     private Img image;
 
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @ColumnDefault("CURRENT_TIMESTAMP")
     private Date createdAt;
 

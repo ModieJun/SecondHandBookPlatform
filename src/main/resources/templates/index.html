@@ -52,9 +52,9 @@
     </div>
     <div class="container">
         <div class="ml-2 mr-2">
-            <div class="row border border-dark p-4" th:each="book,ittr:${recentBooks}">
+            <div class="container row border border-dark rounded p-4" th:each="book,ittr:${recentBooks}">
                 <div class="col-4">
-                    <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-75">
+                    <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}" class="w-50">
                 </div>
                 <div class="row col-xl">
                     <div class=" col-sm col">
