@@ -1,5 +1,6 @@
 package com.junjie.bookplatform.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -19,8 +24,11 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    public SecurityWebConfig(@Qualifier("customUserDetailsService") UserDetailsService userDetailsService) {
+    private final DataSource dataSource;
+
+    public SecurityWebConfig(@Qualifier("customUserDetailsService") UserDetailsService userDetailsService, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -39,6 +47,13 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(getPasswordEncoder());
 
         return provider;
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        final JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource( dataSource );
+        return jdbcTokenRepository;
     }
 
     @Override
@@ -67,9 +82,12 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().loginPage("/login").permitAll()
                 .and()
+                    .rememberMe().tokenRepository(persistentTokenRepository())
+                .and()
                     .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
     }
 
 

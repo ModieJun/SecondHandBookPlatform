@@ -37,8 +37,8 @@
         <form action="/login" method="post" class="text-center border border-light ">
             <h2 class="h2 mb-3">Log in</h2>
             <!--            username    -->
-            <div class="form-group" >
-                <label for="username" >
+            <div class="form-group">
+                <label for="username">
                     Username
                 </label>
                 <input type="text" name="username" id="username" class="form-control text-field w-50 m-auto">
@@ -52,6 +52,13 @@
             </div>
             <p th:if="${param.error}" class="text text-danger">Username or Password Invalid</p>
             <br>
+            <!--           Remember me          -->
+            <div class="form-group">
+                <input type="checkbox" id="remember-me" name="remember-me" value="true" class="form-check-input" >
+                <label for="remember-me" class="form-check-label">
+                    Remember me
+                </label>
+            </div>
             <button class="btn btn-success btn-block my-4 w-50 m-auto p-2" type="submit">Log In</button>
         </form>
         <br>

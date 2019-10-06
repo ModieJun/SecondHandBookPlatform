@@ -8,10 +8,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
-public class UserContact {
+public class UserContact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
@@ -19,7 +20,7 @@ public class UserContact {
     @Column(length = 100)
     private String contact;
 
-    @OneToOne( targetEntity = User.class,mappedBy = "contact")
+    @OneToOne( targetEntity = User.class,fetch = FetchType.LAZY,mappedBy = "contact")
     private User user;
 
     public UserContact() {
