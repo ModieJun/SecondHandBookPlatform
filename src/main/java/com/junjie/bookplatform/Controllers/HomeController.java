@@ -1,8 +1,8 @@
 package com.junjie.bookplatform.Controllers;
 
+import com.junjie.bookplatform.DB.RoleRepository;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Security.SecurityService;
-import com.junjie.bookplatform.Services.BookService;
 import com.junjie.bookplatform.Services.FilterService;
 import com.junjie.bookplatform.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Controller
 public class HomeController {
@@ -27,12 +29,14 @@ public class HomeController {
     private final SecurityService securityService;
     private final Validator uservalidator;
     private final FilterService filterService;
+    private final RoleRepository roleRepository;
 
-    public HomeController(UserServiceImpl userService, SecurityService securityService, @Qualifier("userValidator") Validator userValidator, FilterService filterService) {
+    public HomeController(UserServiceImpl userService, SecurityService securityService, @Qualifier("userValidator") Validator userValidator, FilterService filterService, RoleRepository roleRepository) {
         this.userService = userService;
         this.securityService = securityService;
         this.uservalidator = userValidator;
         this.filterService = filterService;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -69,6 +73,7 @@ public class HomeController {
             return "registration";
         }
 
+        u.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByName("ROLE_USER"))));
 
         userService.addUser(u);
         //autoLogin

@@ -1,6 +1,7 @@
 package com.junjie.bookplatform.Services;
 
 import com.junjie.bookplatform.DB.BookRepository;
+import com.junjie.bookplatform.DB.RoleRepository;
 import com.junjie.bookplatform.DB.UserRepository;
 import com.junjie.bookplatform.Model.Book;
 import com.junjie.bookplatform.Model.User;

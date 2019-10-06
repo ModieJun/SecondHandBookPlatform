@@ -6,6 +6,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity(name = "User")
 @Table(name = "user")
@@ -29,6 +30,9 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private UserContact contact;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
 
     public User() {
     }
@@ -36,6 +40,15 @@ public class User implements Serializable {
     public User(@NotNull String username, @NotNull String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public User setRoles(Set<Role> roles) {
+        this.roles = roles;
+        return this;
     }
 
     public String getPasswordConfirm() {

@@ -23,31 +23,35 @@
     <div class="mr-5  font-weight-normal">
         <ul class="navbar-nav">
             <li sec:authorize="!isFullyAuthenticated()">
-                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
             <li sec:authorize="isFullyAuthenticated()">
-                <a  href="/profile" class="nav-link nav-item">Profile</a>
+                <a href="/profile" class="nav-link nav-item">Profile</a>
             </li>
         </ul>
     </div>
 </div>
 
 <div class="container text-center">
-    <div>
-        <h2 class="h2">Success</h2>
-    </div>
-    <div class="m5 d-flex">
-        <div class="flex-fill text-center">
-            <a href="/" class="hyperlink">Go to Home Page</a>
-        </div>
-        <div class="flex-fill text-center">
-            <a href="/books/" class="hyperlink">Go check for more Book</a>
-        </div>
-        <div>
-            <a href="/profile">Profile</a>
-        </div>
-        <div class="flex-fill text-center">
-            <a href="/profile/myBooks" class="hyperlink">Go to my Books</a>
+    <div class="container mt-5">
+        <div class="shadow-lg p-5">
+            <div>
+                <h2 class="h2">Success</h2>
+            </div>
+            <div class="m5 d-flex">
+                <div class="flex-fill text-center">
+                    <a href="/" class="hyperlink">Go to Home Page</a>
+                </div>
+                <div class="flex-fill text-center">
+                    <a href="/books/" class="hyperlink">Go check for more Book</a>
+                </div>
+                <div>
+                    <a href="/profile">Profile</a>
+                </div>
+                <div class="flex-fill text-center">
+                    <a href="/profile/myBooks" class="hyperlink">Go to my Books</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

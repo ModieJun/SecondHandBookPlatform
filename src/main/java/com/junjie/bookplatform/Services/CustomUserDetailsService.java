@@ -1,8 +1,11 @@
 package com.junjie.bookplatform.Services;
 
 import com.junjie.bookplatform.DB.UserRepository;
+import com.junjie.bookplatform.Model.Role;
 import com.junjie.bookplatform.Model.User;
 import com.junjie.bookplatform.Model.UserPrinciple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
