@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+    <!--    Bootstrap CSS       -->
+    <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}"/>
+    <!--    Icon Library        -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
 </head>
 <body style="width: 100%;">
 <!--NAV-->
@@ -33,129 +37,140 @@
 </div>
 
 <div class="container">
+    <div class=" mt-5  p-5 shadow-lg">
+        <!--        Back Button Icon-->
+        <div class="mb-4" >
+            <a href="/profile" class="text-dark">
+                <i class="fa fa-arrow-left fa-3x "></i>
+            </a>
+        </div>
 
-    <!--    IF ITS VIEWING THE USER LISTED BOOKS  -->
-    <div th:if="${myBooks}" class=" mt-3  p-5 shadow-lg">
-        <div>
-            <h2 class="h2">My Books</h2>
-        </div>
-        <div th:if="${myBooks.isEmpty()}" class="text-center">
-            <div class="m-5">
-                <h3 class="h3">No Books Listed</h3>
+        <!--    IF ITS VIEWING THE USER LISTED BOOKS  -->
+        <div th:if="${myBooks}">
+            <div>
+                <h2 class="h2">My Books</h2>
             </div>
-            <div class="d-flex flex-row">
-                <div class="flex-fill">
-                    <form action="/books/add">
-                        <button type="submit" class="btn btn-primary btn-block">Add Book</button>
-                    </form>
+            <div th:if="${myBooks.isEmpty()}" class="text-center">
+                <div class="m-5">
+                    <h3 class="h3">No Books Listed</h3>
                 </div>
-                <div class="flex-fill">
-                    <form action="/profile">
-                        <button type="submit" class="btn btn-block btn-primary">Go Back</button>
-                    </form>
+                <div class="d-flex flex-row">
+                    <div class="flex-fill">
+                        <form action="/books/add">
+                            <button type="submit" class="btn btn-primary btn-block">Add Book</button>
+                        </form>
+                    </div>
+                    <div class="flex-fill">
+                        <form action="/profile">
+                            <button type="submit" class="btn btn-block btn-primary">Go Back</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="mt-3" th:if="!${myBooks.isEmpty()}">
+                <table class="table table-bordered">
+                    <tr class="bg-light">
+                        <th class="column-header">Book Name</th>
+                        <th class="column-header">Book Author</th>
+                        <th class="column-header">Type</th>
+                        <th class="column-header">Year Needed</th>
+                        <th class="column-header">Price</th>
+                        <th class="column-header">Image</th>
+                        <th class="column-header">Edit</th>
+                        <th class="column-header">Remove</th>
+                    </tr>
+                    <tr th:each="book,itr:${myBooks}">
+                        <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
+                        <td th:text="${book.getAuthor()}"></td>
+                        <td th:text="${book.getType().getDisplayValue()}"></td>
+                        <td th:text="${book.getYearNeed()}"></td>
+                        <td th:text="|¥${book.getPrice()}|"></td>
+                        <td>
+                            <div class="align-content-center">
+                                <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
+                                     class="w-50">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex-fill">
+                                <form action="/profile/myBooks/edit" method="get">
+                                    <input type="number" name="book_id" id="book_edit" hidden
+                                           th:value="${book.getId()}">
+                                    <button type="submit" class="btn btn-block btn-primary">Edit</button>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex-fill">
+                                <form action="/profile/myBooks/delete">
+                                    <input type="number" name="book_id" id="book_delete" hidden
+                                           th:value="${book.getId()}">
+                                    <button type="submit" class="btn btn-block btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="" th:if="!${myBooks.isEmpty()}">
-            <table class="table table-bordered">
-                <tr class="bg-light">
-                    <th class="column-header">Book Name</th>
-                    <th class="column-header">Book Author</th>
-                    <th class="column-header">Type</th>
-                    <th class="column-header">Year Needed</th>
-                    <th class="column-header">Price</th>
-                    <th class="column-header">Image</th>
-                    <th class="column-header">Edit</th>
-                    <th class="column-header">Remove</th>
-                </tr>
-                <tr th:each="book,itr:${myBooks}">
-                    <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
-                    <td th:text="${book.getAuthor()}"></td>
-                    <td th:text="${book.getType().getDisplayValue()}"></td>
-                    <td th:text="${book.getYearNeed()}"></td>
-                    <td th:text="|¥${book.getPrice()}|"></td>
-                    <td>
-                        <div class="align-content-center">
-                            <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
-                                 class="w-50">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flex-fill">
-                            <form action="/profile/myBooks/edit" method="get">
-                                <input type="number" name="book_id" id="book_edit" hidden th:value="${book.getId()}">
-                                <button type="submit" class="btn btn-block btn-primary">Edit</button>
-                            </form>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flex-fill">
-                            <form action="/profile/myBooks/delete">
-                                <input type="number" name="book_id" id="book_delete" hidden th:value="${book.getId()}">
-                                <button type="submit" class="btn btn-block btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <!--    END OF IF   -->
+
+
+        <!--    IF ITS THE BOOKS THE USER HAS BOUGHT    -->
+        <div th:if="${boughtBooks}">
+            <div>
+                <h2 class="h2">My Bought Books</h2>
+            </div>
+            <div th:if="${boughtBooks.isEmpty()}" class="text-center">
+                <div class="m-5">
+                    <h3 class="h3">No books bought</h3>
+                </div>
+                <div class="m-auto w-50">
+                            <a href="/books/" class="btn btn-primary btn-block">Buy a Book</a>
+                </div>
+            </div>
+            <div th:if="!${boughtBooks.isEmpty()}" class="mt-3">
+                <table class="table table-bordered">
+                    <tr class="bg-light">
+                        <th class="column-header">Book Name</th>
+                        <th class="column-header">Book Author</th>
+                        <th class="column-header">Type</th>
+                        <th class="column-header">Year Needed</th>
+                        <th class="column-header">Price</th>
+                        <th class="column-header">Image</th>
+                        <th class="column-header">Contact</th>
+                    </tr>
+                    <tr th:each="book,attr:${boughtBooks}">
+                        <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
+                        <td th:text="${book.getAuthor()}"></td>
+                        <td th:text="${book.getType().getDisplayValue()}"></td>
+                        <td th:text="${book.getYearNeed()}"></td>
+                        <td th:text="|¥${book.getPrice()}|"></td>
+                        <td>
+                            <div class="align-content-center">
+                                <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
+                                     class="w-50">
+                            </div>
+                        </td>
+                        <td class="font-italic" th:text="${book.getBuyer().getContact().getContact()}"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
+        <!--   END OF IF    -->
     </div>
-    <!--    END OF IF   -->
 
-    <!--    IF ITS THE BOOKS THE USER HAS BOUGHT    -->
-    <div th:if="${boughtBooks}" class=" container mt-3  p-5 shadow-lg">
-        <div>
-            <h2 class="h2">My Bought Books</h2>
-        </div>
-        <div th:if="${boughtBooks.isEmpty()}" class="text-center">
-            <div class="m-5">
-                <h3 class="h3">No books bought</h3>
-            </div>
-            <div class="d-flex flex-row">
-
-                <div class="flex-fill">
-                    <form action="/books/">
-                        <button type="submit" class="btn btn-primary btn-block">Buy Books</button>
-                    </form>
-                </div>
-                <div class="flex-fill">
-                    <form action="/profile">
-                        <button type="submit" class="btn btn-block btn-primary">Go Back</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div th:if="!${boughtBooks.isEmpty()}">
-            <table class="table table-bordered">
-                <tr class="bg-light">
-                    <th class="column-header">Book Name</th>
-                    <th class="column-header">Book Author</th>
-                    <th class="column-header">Type</th>
-                    <th class="column-header">Year Needed</th>
-                    <th class="column-header">Price</th>
-                    <th class="column-header">Image</th>
-                    <th class="column-header">Contact</th>
-                </tr>
-                <tr th:each="book,attr:${boughtBooks}">
-                    <td th:text="${book.getBookName()}" class="font-weight-bold"></td>
-                    <td th:text="${book.getAuthor()}"></td>
-                    <td th:text="${book.getType().getDisplayValue()}"></td>
-                    <td th:text="${book.getYearNeed()}"></td>
-                    <td th:text="|¥${book.getPrice()}|"></td>
-                    <td>
-                        <div class="align-content-center">
-                            <img th:src="@{'/books/image/'+${book.getId()}}" th:alt="${book.getBookName()}"
-                                 class="w-50">
-                        </div>
-                    </td>
-                    <td class="font-italic" th:text="${book.getBuyer().getContact().getContact()}"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <!--   END OF IF    -->
-
-
+    <!--Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <!--    -->
 </div>
 </body>
 </html>

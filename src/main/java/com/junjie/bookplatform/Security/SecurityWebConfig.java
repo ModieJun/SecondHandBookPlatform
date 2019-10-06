@@ -82,7 +82,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().loginPage("/login").permitAll()
                 .and()
-                    .rememberMe().tokenRepository(persistentTokenRepository())
+                    .rememberMe().tokenValiditySeconds(60).tokenRepository(persistentTokenRepository())
                 .and()
                     .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
 
