@@ -20,12 +20,19 @@
     </div>
     <!--   Reusable for other pages -->
     <div class="mr-5  font-weight-normal">
-        <ul class="navbar-nav">
-            <li sec:authorize="!isFullyAuthenticated()">
+        <ul class="navbar-nav mr-5">
+            <li sec:authorize="!isFullyAuthenticated() and !isRememberMe()">
                 <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
-            <li sec:authorize="isFullyAuthenticated()">
-                <a href="/profile" class="nav-link nav-item">Profile</a>
+            <li sec:authorize="isFullyAuthenticated() or isRememberMe()" class="nav-item row">
+                <a href="/profile" class="nav-link ">Profile</a>
+                <div class="dropdown nav-item mr-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item m-auto" href="/logout">Logout</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

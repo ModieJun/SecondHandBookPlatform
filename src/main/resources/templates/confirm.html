@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Confirm</title>
     <link rel="stylesheet" th:href="@{/public/css/bootstrap.min.css}">
+    <!--    Icon Library        -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
 <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
@@ -20,55 +22,70 @@
     </div>
     <!--   Reusable for other pages -->
     <div class="mr-5  font-weight-normal">
-        <ul class="navbar-nav">
-            <li sec:authorize="!isFullyAuthenticated()">
-                <a  href="/login" class="nav-link nav-item">Login/Register</a>
+        <ul class="navbar-nav mr-5">
+            <li sec:authorize="!isFullyAuthenticated() and !isRememberMe()">
+                <a href="/login" class="nav-link nav-item">Login/Register</a>
             </li>
-            <li sec:authorize="isFullyAuthenticated()">
-                <a  href="/profile" class="nav-link nav-item">Profile</a>
+            <li sec:authorize="isFullyAuthenticated() or isRememberMe()" class="nav-item row">
+                <a href="/profile" class="nav-link ">Profile</a>
+                <div class="dropdown nav-item mr-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item m-auto" href="/logout">Logout</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
 </div>
-<div class="container mt-5 border border-light shadow-lg p-5">
-    <div>
-        <h2 class="h2">Confirmation</h2>
-        <table class="table-borderless table">
-            <tr >
-                <td>Name</td>
+<div class="container mt-5 mb-3 border border-light shadow-lg p-5">
+    <!--        Back Button Icon-->
+    <div class="mb-4">
+        <a href="/profile" class="text-dark">
+            <i class="fa fa-arrow-left fa-3x "></i>
+        </a>
+    </div>
+    <div class="pl-5">
+        <div class="text-center">
+            <h2 class="h2 font-weight-bolder font-italic">Confirmation</h2>
+        </div>
+        <table class=" table-borderless table">
+            <tr>
+                <td class="font-weight-bold">Name</td>
                 <td th:text="${confirmBook.getBookName()}"></td>
             </tr>
             <tr>
-                <td>Author</td>
+                <td class="font-weight-bold">Author</td>
                 <td th:text="${confirmBook.getAuthor()}"></td>
             </tr>
             <tr>
-                <td>Type</td>
+                <td class="font-weight-bold">Type</td>
                 <td th:text="${confirmBook.getType().getDisplayValue()}"></td>
             </tr>
             <tr>
-                <td>Year Needed</td>
+                <td class="font-weight-bold">Year Needed</td>
                 <td th:text="${confirmBook.getYearNeed()}"></td>
             </tr>
             <tr>
-                <td>Price</td>
+                <td class="font-weight-bold">Price</td>
                 <td th:text="|¥${confirmBook.getPrice()}|"></td>
             </tr>
             <tr>
-                <td>Book Img:</td>
+                <td class="font-weight-bold">Book Img:</td>
                 <td>
                     <img th:src="@{'/books/image/'+${confirmBook.getId()}}" th:alt="${confirmBook.getBookName()}"
-                         class="w-50"></td>
+                         class="w-25"></td>
             </tr>
         </table>
     </div>
-    <div  th:if="${buyBook}">
+    <div th:if="${buyBook}" class="w-75 m-auto">
         <form action="/books/buy" method="post" th:object="${confirmBook}" class="mt-5">
             <input type="number" name="book_id" th:value="${confirmBook.id}" hidden>
             <button type="submit" class="btn btn-block btn-primary btn-success">CONFIRM</button>
         </form>
     </div>
-    <div th:if="${deleteBook}">
+    <div th:if="${deleteBook}" class="w-75 m-auto">
         <form action="/profile/myBooks/delete/confirm" method="post" th:object="${confirmBook}" class="mt-5">
             <input type="number" name="book_id" th:value="${confirmBook.id}" hidden>
             <button type="submit" class="btn btn-block btn-primary btn-danger">Delete</button>

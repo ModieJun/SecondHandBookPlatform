@@ -20,7 +20,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findAll(Pageable pageable);
 
     //    @Query(value = "select b from Book  b where  b.bookOwner <> uid ")
-    List<Book> findBooksByBookOwnerNot(User user);
+    List<Book> findBooksByBookOwnerNotAndBuyerNull(User user);
 
     List<Book> findBooksByBookOwner(User user);
 

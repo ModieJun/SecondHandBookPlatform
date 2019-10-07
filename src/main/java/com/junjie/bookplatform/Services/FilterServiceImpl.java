@@ -28,7 +28,7 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public List<Book> getAllLoggedIn(User u) {
-        return bookRepository.findBooksByBookOwnerNot(u);
+        return bookRepository.findBooksByBookOwnerNotAndBuyerNull(u);
     }
 
     @Override
